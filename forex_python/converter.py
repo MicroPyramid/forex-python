@@ -2,13 +2,6 @@ import requests
 import datetime
 
 
-class RateNotFoundError(Exception):
-    """
-    Custom exception when conversion rate not found for given Country
-    """
-    pass
-
-
 class RatesNotAvailableError(Exception):
     """
     Custome Exception when http://fixer.io/ is Down are not available for currency rates
