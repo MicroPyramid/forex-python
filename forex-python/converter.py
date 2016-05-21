@@ -20,11 +20,9 @@ class Common:
 
     def __init__(self):
         pass
-    
+
     def _source_url(self):
         return "http://api.fixer.io/"
-
-    # def _validate_date(self, date_str):
 
     def _get_date_string(self, date_str):
         if date_str is None:
@@ -35,7 +33,7 @@ class Common:
         except ValueError:
             raise ValueError("Incorrect date String, date_str should be YYYY-MM-DD")
 
-        
+
 class CurrencyRates(Common):
 
     def get_rates(self, base_cur, date_str=None):
@@ -54,8 +52,10 @@ class CurrencyRates(Common):
         source_url = self._source_url() + date_str
         response = requests.get(source_url, params=payload)
         if response.status_code == 200:
-            print response.json()
             rate = response.json().get('rates', {}).get(dest_cur)
+            if not rate:
+                raise RatesNotAvailableError("Currency Rate {0} => {1} not available for Date {2}".format(
+                    base_cur, dest_cur, date_str))
             return rate
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
@@ -65,7 +65,6 @@ class CurrencyRates(Common):
         source_url = self._source_url() + date_str
         response = requests.get(source_url, params=payload)
         if response.status_code == 200:
-            print response.json()
             rate = response.json().get('rates', {}).get(dest_cur, None)
             if not rate:
                 raise RatesNotAvailableError("Currency {0} => {1} rate not available for Date {2}.".format(
