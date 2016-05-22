@@ -1,5 +1,8 @@
 forex-python
 ============
+[![Build Status](https://travis-ci.org/MicroPyramid/forex-python.svg?branch=master)](https://travis-ci.org/MicroPyramid/forex-python)
+[![Coverage Status](https://coveralls.io/repos/github/MicroPyramid/forex-python/badge.svg?branch=master)](https://coveralls.io/github/MicroPyramid/forex-python?branch=master)
+[![Code Health](https://landscape.io/github/MicroPyramid/forex-python/master/landscape.svg?style=plastic)](https://landscape.io/github/MicroPyramid/forex-python/master)
 
 Foreign exchange rates and currency conversion.
 
