@@ -19,64 +19,58 @@ Installation:
 ------------
 
 Install using python package
-
-.. code-block:: bash
-
- $ pip install forex-python
+```
+$ pip install forex-python
+```
 
 Or directly cloning the repo:
-
-.. code-block:: bash
-
-  $ python setup.py install
+```
+$ python setup.py install
+```
 
 Examples:
 ------------------
 
 Initialize class
-
-.. code-block:: python
-
-    >>> from forex_python.converter import CurrencyRates
-    >>> c = CurrencyRates()
+```python
+>>> from forex_python.converter import CurrencyRates
+>>> c = CurrencyRates()
+```
 
 list all latest currency rates for "USD"
-
-.. code-block:: python
-
-    >>> c.get_rates('USD')
-    {'EUR':19.22}
+```python
+>>> c.get_rates('USD')
+{u'IDR': 13625.0, u'BGN': 1.7433, u'ILS': 3.8794, u'GBP': 0.68641, u'DKK': 6.6289, u'CAD': 1.3106, u'JPY': 110.36, u'HUF': 282.36, u'RON': 4.0162, u'MYR': 4.081, u'SEK': 8.3419, u'SGD': 1.3815, u'HKD': 7.7673, u'AUD': 1.3833, u'CHF': 0.99144, u'KRW': 1187.3, u'CNY': 6.5475, u'TRY': 2.9839, u'HRK': 6.6731, u'NZD': 1.4777, u'THB': 35.73, u'EUR': 0.89135, u'NOK': 8.3212, u'RUB': 66.774, u'INR': 67.473, u'MXN': 18.41, u'CZK': 24.089, u'BRL': 3.5473, u'PLN': 3.94, u'PHP': 46.775, u'ZAR': 15.747}
+```
 
 Get Conversion rate from USD to INR
-
-.. code-block:: python
-
-    >>> c.get_rate('USD', 'INR')
-    67.32
+```python
+>>> c.get_rate('USD', 'INR')
+67.473
+```
 
 Convert amount from USD to INR:
-.. code-block:: python
-
-    >>> c.convert('USD', 'INR', 10)
-    673.25
+```python
+>>> c.convert('USD', 'INR', 10)
+674.73
+```
 
 Convert amount from USD to INR based on 2010-03-01 rates
-
-.. code-block:: python
-
-    >>> c.convert(100, 'EUR', 'USD', 10, "2010-03-01")
-    632.60
+```python
+>>> import datetime
+>>> date_obj = datetime.datetime.strptime('2010-05-10', "%Y-%m-%d").date()
+>>> c.convert('EUR', 'USD', 10, date_obj)
+12.969
+```
 
 RatesNotAvailableError for invalid currency codes and missing currency code from source:
-
-.. code-block:: python
-
+```python
     >>> c.get_rate('XYZ', 'INR')
     Traceback (most recent call last):
     RatesNotAvailableError: Currency XYZ => INR rate not available for Date latest.
+```
 
-Compleate `documentation`_
+Compleate [Documentation](http://forex-python.readthedocs.org/en/latest/?badge=latest)
 
 We welcome your feedback and support. found bug raise github issue.
 
-.. _documentation: http://forex-python.readthedocs.org/en/latest/?badge=latest

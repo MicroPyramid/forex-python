@@ -17,20 +17,20 @@ class Common:
     def _source_url(self):
         return "http://api.fixer.io/"
 
-    def _get_date_string(self, date_str):
-        if date_str is None:
+    def _get_date_string(self, date_obj):
+        if date_obj is None:
             return 'latest'
         try:
-            datetime.datetime.strptime(date_str, '%Y-%m-%d')
+            date_str = date_obj.strftime('%Y-%m-%d')
             return date_str
         except ValueError:
-            raise ValueError("Incorrect date String, date_str should be YYYY-MM-DD")
+            raise ValueError("Incorrect date String, date should be YYYY-MM-DD")
 
 
 class CurrencyRates(Common):
 
-    def get_rates(self, base_cur, date_str=None):
-        date_str = self._get_date_string(date_str)
+    def get_rates(self, base_cur, date_obj=None):
+        date_str = self._get_date_string(date_obj)
         payload = {'base': base_cur}
         source_url = self._source_url() + date_str
         response = requests.get(source_url, params=payload)
@@ -39,8 +39,8 @@ class CurrencyRates(Common):
             return rates
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
-    def get_rate(self, base_cur, dest_cur, date_str=None):
-        date_str = self._get_date_string(date_str)
+    def get_rate(self, base_cur, dest_cur, date_obj=None):
+        date_str = self._get_date_string(date_obj)
         payload = {'base': base_cur, 'symbols': dest_cur}
         source_url = self._source_url() + date_str
         response = requests.get(source_url, params=payload)
@@ -52,8 +52,8 @@ class CurrencyRates(Common):
             return rate
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
-    def convert(self, base_cur, dest_cur, amount, date_str=None):
-        date_str = self._get_date_string(date_str)
+    def convert(self, base_cur, dest_cur, amount, date_obj=None):
+        date_str = self._get_date_string(date_obj)
         payload = {'base': base_cur, 'symbols': dest_cur}
         source_url = self._source_url() + date_str
         response = requests.get(source_url, params=payload)
