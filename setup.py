@@ -14,7 +14,7 @@ setup(
     author='Micro Pyramid Informatic Pvt. Ltd.',
     author_email='hello@micropyramid.com',
     url='https://github.com/MicroPyramid/forex-python',
-    description='A currency rates and converter using the http://fixer.io/ API.',
+    description='Foreign exchange rates and currency conversion.',
     long_description=LONG_DESCRIPTION,
     license=LICENSE,
     packages=find_packages(exclude=['tests', 'tests.*']),
@@ -32,5 +32,6 @@ setup(
         'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Topic :: Software Development :: Internationalization',
     ],
 )
