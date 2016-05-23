@@ -1,12 +1,11 @@
+import os
 from setuptools import setup, find_packages
 
-VERSION = 0.1.1
+VERSION = 0.2
 
-with open('README.md') as fl:
-    LONG_DESCRIPTION = fl.read()
+with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
+    LONG_DESCRIPTION = readme.read()
 
-with open('LICENSE') as fl:
-    LICENSE = fl.read()
 
 setup(
     name='forex-python',
@@ -16,7 +15,6 @@ setup(
     url='https://github.com/MicroPyramid/forex-python',
     description='Foreign exchange rates and currency conversion.',
     long_description=LONG_DESCRIPTION,
-    license=LICENSE,
     packages=find_packages(exclude=['tests', 'tests.*']),
     include_package_data=True,
     install_requires=[
