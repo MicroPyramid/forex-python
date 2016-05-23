@@ -1,7 +1,7 @@
 import os
 from setuptools import setup, find_packages
 
-VERSION = 0.2
+VERSION = '0.2.1'
 
 with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
     LONG_DESCRIPTION = readme.read()
