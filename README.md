@@ -4,6 +4,9 @@ forex-python
 [![Coverage Status](https://coveralls.io/repos/github/MicroPyramid/forex-python/badge.svg?branch=master)](https://coveralls.io/github/MicroPyramid/forex-python?branch=master)
 [![Code Health](https://landscape.io/github/MicroPyramid/forex-python/master/landscape.svg?style=plastic)](https://landscape.io/github/MicroPyramid/forex-python/master)
 
+[![Python Support](https://img.shields.io/badge/python-2.7%2C%203.3%2C%203.4%2C%203.5-blue.svg)](https://pypi.python.org/pypi/forex-python)
+
+
 Free Foreign exchange rates and currency conversion.
 
 Features:
@@ -68,12 +71,19 @@ Convert amount from USD to INR based on 2010-03-01 rates
 
 RatesNotAvailableError for invalid currency codes and missing currency code from source:
 ```python
-    >>> c.get_rate('XYZ', 'INR')
-    Traceback (most recent call last):
-    RatesNotAvailableError: Currency XYZ => INR rate not available for Date latest.
+>>> c.get_rate('XYZ', 'INR')
+Traceback (most recent call last):
+RatesNotAvailableError: Currency XYZ => INR rate not available for Date latest.
 ```
 
-Compleate [Documentation](http://forex-python.readthedocs.org/en/latest/?badge=latest)
+Get currency symbol using currency code
+```python
+>>> from forex_python.converter import CurrencyCodes
+>>> c = CurrencyCodes()
+>>> print c.get_symbol('GBP')
+£
+```
+
+Complete [Documentation](http://forex-python.readthedocs.org/en/latest/?badge=latest)
 
 We welcome your feedback and support. found bug raise github issue.
-

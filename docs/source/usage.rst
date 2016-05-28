@@ -1,6 +1,8 @@
 Usage Examples:
 ===============
 
+Currency Rates
+--------------
 1. list all latest currency rates for "USD"::
      >>> from forex_python.converter import CurrencyRates
      >>> c = CurrencyRates()
@@ -32,3 +34,24 @@ Usage Examples:
      datetime.datetime(2014, 5, 23, 18, 36, 28, 151012)
      >>> c.convert('USD', 'INR', 10, date_obj)
      585.09
+
+Currency Symboles & Codes
+-------------------------
+1. Get Currency symbol Using currency code::
+     >>> from forex_python.converter import CurrencyCodes
+     >>> c = CurrencyCodes()
+     >>> c.get_symbol('GBP')
+     u'\xa3'
+     >>> print c.get_symbol('GBP')
+     £
+     >>> print c.get_symbol('EUR')
+     €
+
+2. Get Currency Name using currency code::
+     >>> c.get_currency_name('EUR')
+     u'European Euro'
+     >>> c.get_currency_name('INR')
+     u'Indian rupee'
+
+
+
