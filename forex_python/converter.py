@@ -1,3 +1,5 @@
+import os
+import json
 import requests
 
 
@@ -61,3 +63,27 @@ class CurrencyRates(Common):
             converted_amount = rate * amount
             return converted_amount
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
+
+
+class CurrencyCodes:
+
+    def __init__(self):
+        pass
+
+    def _get_data(self, currency_code):
+        file_path = os.path.dirname(os.path.abspath(__file__))
+        currency_data = json.loads(open(file_path+'/raw_data/currencies.json').read())
+        currency_dict = next((item for item in currency_data if item["cc"] == currency_code), None)
+        return currency_dict
+
+    def get_symbol(self, currency_code):
+        currency_dict = self._get_data(currency_code)
+        if currency_dict:
+            return currency_dict.get('symbol')
+        return None
+
+    def get_currency_name(self, currency_code):
+        currency_dict = self._get_data(currency_code)
+        if currency_dict:
+            return currency_dict.get('name')
+        return None
