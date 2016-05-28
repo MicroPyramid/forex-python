@@ -1,2 +1,3 @@
 include README.md
 include LICENSE.txt
+include forex_python/raw_data/currencies.json
