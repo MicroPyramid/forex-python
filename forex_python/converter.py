@@ -72,7 +72,8 @@ class CurrencyCodes:
 
     def _get_data(self, currency_code):
         file_path = os.path.dirname(os.path.abspath(__file__))
-        currency_data = json.loads(open(file_path+'/raw_data/currencies.json').read())
+        with open(file_path+'/raw_data/currencies.json') as f:
+            currency_data = json.loads(f.read())
         currency_dict = next((item for item in currency_data if item["cc"] == currency_code), None)
         return currency_dict
 
