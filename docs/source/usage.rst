@@ -35,7 +35,7 @@ Currency Rates
      >>> c.convert('USD', 'INR', 10, date_obj)
      585.09
 
-Currency Symboles & Codes
+Currency Symbols & Codes
 -------------------------
 1. Get Currency symbol Using currency code::
      >>> from forex_python.converter import CurrencyCodes
