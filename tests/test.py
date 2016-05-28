@@ -1,6 +1,6 @@
 import datetime
 from unittest import TestCase
-from forex_python.converter import CurrencyRates
+from forex_python.converter import CurrencyRates, CurrencyCodes
 from forex_python.converter import RatesNotAvailableError
 
 
@@ -88,3 +88,32 @@ class TestAmountConvert(TestCase):
     def test_amount_convert_invalid_currency(self):
         # test if amount returned in float
         self.assertRaises(RatesNotAvailableError, self.c.convert, 'ABC', 'XYZ', 10)
+
+
+class TestCurrencySymbol(TestCase):
+    """
+    test currency symbols from currency codes
+    """
+    def setUp(self):
+        self.c = CurrencyCodes()
+
+    def test_with_valid_currency_code(self):
+        self.assertEqual(str(self.c.get_symbol('USD')), 'US$')
+
+    def test_with_invalid_currency_code(self):
+        self.assertFalse(self.c.get_symbol('XYZ'))
+
+
+class TestCurrencyName(TestCase):
+    """
+    test currency name from currency codes
+    """
+    def setUp(self):
+        self.c = CurrencyCodes()
+
+    def test_with_valid_currency_code(self):
+        self.assertEqual(str(self.c.get_currency_name('USD')), 'United States dollar')
+
+    def test_with_invalid_currency_code(self):
+        self.assertFalse(self.c.get_currency_name('XYZ'))
+
