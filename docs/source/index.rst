@@ -7,8 +7,10 @@ Features:
 ---------
 - List all currency rates.
 - Get historical rates for any day since 1999.
-- Conversion rate for one Currency(ex; USD to INR).
+- Conversion rate for one currency(ex; USD to INR).
 - Convert amount from one currency to other.('USD 10$' to INR)
+- Currency Symbols
+- Currency names
 
 Contents:
 
