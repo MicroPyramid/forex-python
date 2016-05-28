@@ -1,9 +1,10 @@
+import io
 import os
 from setuptools import setup, find_packages
 
 VERSION = '0.2.2'
 
-with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
+with io.open(os.path.join(os.path.dirname(__file__), 'README.md'),  encoding='utf-8', errors='ignore') as readme:
     LONG_DESCRIPTION = readme.read()
 
 
