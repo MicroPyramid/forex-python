@@ -2,10 +2,8 @@ forex-python
 ============
 [![Build Status](https://travis-ci.org/MicroPyramid/forex-python.svg?branch=master)](https://travis-ci.org/MicroPyramid/forex-python)
 [![Coverage Status](https://coveralls.io/repos/github/MicroPyramid/forex-python/badge.svg?branch=master)](https://coveralls.io/github/MicroPyramid/forex-python?branch=master)
-[![Code Health](https://landscape.io/github/MicroPyramid/forex-python/master/landscape.svg?style=plastic)](https://landscape.io/github/MicroPyramid/forex-python/master)
-
 [![Python Support](https://img.shields.io/badge/python-2.7%2C%203.3%2C%203.4%2C%203.5-blue.svg)](https://pypi.python.org/pypi/forex-python)
-
+[![Code Health](https://landscape.io/github/MicroPyramid/forex-python/master/landscape.svg?style=plastic)](https://landscape.io/github/MicroPyramid/forex-python/master)
 
 Free Foreign exchange rates and currency conversion.
 
