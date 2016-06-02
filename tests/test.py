@@ -1,7 +1,6 @@
 import datetime
 from unittest import TestCase
-from forex_python.converter import CurrencyRates, CurrencyCodes
-from forex_python.converter import RatesNotAvailableError
+from forex_python.converter import CurrencyRates, CurrencyCodes, RatesNotAvailableError
 
 
 class TestGetRates(TestCase):
