@@ -17,7 +17,7 @@ Currency Rates
 
 3. Get conversion rate from USD to INR::
      >>> c.get_rate('USD', 'INR')
-     67.473
+     67.473  # return type float
 
 4. Get conversion rate from USD to INR on 2014-05-23::
      >>> date_obj
@@ -34,6 +34,52 @@ Currency Rates
      datetime.datetime(2014, 5, 23, 18, 36, 28, 151012)
      >>> c.convert('USD', 'INR', 10, date_obj)
      585.09
+
+Bitcoin Prices:
+---------------
+1. Get latest price of one Bitcoin::
+     >>> from forex_python.bitcoin import BtcConverter
+     >>> b = BtcConverter()
+     >>> b.get_latest_price('EUR')
+     476.5225  # return type float
+
+2. Get price of Bitcoin based on prevois date::
+     >>> date_obj
+     datetime.datetime(2016, 5, 18, 19, 39, 36, 815417)
+     >>> b.get_previous_price('USD', date_obj)
+     453.378
+
+3. Convert Amout to bitcoins::
+     >>> b.convert_to_btc(5000, 'USD')
+     9.36345369116708
+
+4. Convert Amount to bitcoins based on previous date prices::
+     >>> date_obj
+     datetime.datetime(2016, 5, 18, 19, 39, 36, 815417)
+     >>> b.convert_to_btc_on(5000, 'USD', date_obj)
+     11.028325150316071
+
+5. Convert Bitcoins to valid currency amount based on lates price::
+     >>> b.convert_btc_to_cur(1.25, 'USD')
+     668.1012499999999
+
+6. Convert Bitcoins to valid currency amount based on previous date price::
+     >>> date_obj
+     datetime.datetime(2016, 5, 18, 19, 39, 36, 815417)
+     >>> b.convert_btc_to_cur_on(1.25, 'EUR', date_obj)
+     504.23625000000004
+
+7. Get list of prices list for given date range::
+     >>> start_date
+     datetime.datetime(2016, 5, 18, 19, 39, 36, 815417)
+     >>> end_date
+     datetime.datetime(2016, 5, 23, 19, 39, 36, 815417)
+     >>> b.get_previous_price_list('INR', start_date, end_date)
+     {u'2016-05-19': 29371.7579, u'2016-05-18': 30402.3169, u'2016-05-22': 29586.3631, u'2016-05-23': 29925.3272, u'2016-05-20': 29864.0256, u'2016-05-21': 29884.7449}
+
+8. Get Bitcoin symbol::
+     >>> print(b.get_symbol())
+     ฿
 
 Currency Symbols & Codes
 -------------------------
