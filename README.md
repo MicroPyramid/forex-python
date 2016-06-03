@@ -92,6 +92,4 @@ Get currency symbol using currency code
 
 Complete [Documentation](http://forex-python.readthedocs.org/en/latest/?badge=latest)
 
-We welcome your feedback and support. found bug raise github issue.
-
-We welcome your feedback and support, raise github ticket if you want to report a bug. Need new features? Contact us at https://micropyramid.com/contact-us/
+We welcome your feedback and support. found bug raise github issue. Need new features? Contact us at https://micropyramid.com/contact-us/
