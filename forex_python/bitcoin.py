@@ -135,3 +135,14 @@ class BtcConverter(object):
         Here is Unicode symbol for bit coin
         """
         return "\u0E3F"
+
+_Btc_Converter = BtcConverter()
+
+get_btc_symbol = _Btc_Converter.get_symbol
+convert_btc_to_cur_on = _Btc_Converter.convert_btc_to_cur_on
+convert_to_btc_on = _Btc_Converter.convert_to_btc_on
+convert_btc_to_cur = _Btc_Converter.convert_btc_to_cur
+convert_to_btc = _Btc_Converter.convert_to_btc
+get_latest_price = _Btc_Converter.get_latest_price
+get_previous_price = _Btc_Converter.get_previous_price
+get_previous_price_list = _Btc_Converter.get_previous_price_list

@@ -65,6 +65,13 @@ class CurrencyRates(Common):
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
 
+_CURRENCY_FORMATTER = CurrencyRates()
+
+get_rates = _CURRENCY_FORMATTER.get_rates
+get_rate = _CURRENCY_FORMATTER.get_rate
+convert = _CURRENCY_FORMATTER.convert
+
+
 class CurrencyCodes:
 
     def __init__(self):
@@ -88,3 +95,9 @@ class CurrencyCodes:
         if currency_dict:
             return currency_dict.get('name')
         return None
+
+_CURRENCY_CODES = CurrencyCodes()
+
+
+get_symbol = _CURRENCY_CODES.get_symbol
+get_currency_name = _CURRENCY_CODES.get_currency_name
