@@ -41,3 +41,7 @@ List of Supported Currency codes.
 |PLN - Poland Zloty
 |PHP - Philippines Peso
 |ZAR - South Africa Rand
+
+Bitcoin Prices:
+---------------
+Bitcoin prices calculated every minute from CoinDesk API.

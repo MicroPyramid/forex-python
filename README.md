@@ -6,7 +6,7 @@ forex-python
 [![license](https://img.shields.io/github/license/MicroPyramid/forex-python.svg?maxAge=2592000)](https://pypi.python.org/pypi/forex-python)
 [![Code Health](https://landscape.io/github/MicroPyramid/forex-python/master/landscape.svg?style=plastic)](https://landscape.io/github/MicroPyramid/forex-python/master)
 
-Free Foreign exchange rates and currency conversion.
+Free Foreign exchange rates, bitcoin prices and currency conversion.
 
 Features:
 ---------
