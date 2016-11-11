@@ -1,7 +1,7 @@
 forex-python
 ============
 
-Free Foreign exchange rates and currency conversion.
+Free Foreign exchange rates, bitcoin prices and currency conversion.
 
 Features:
 ---------

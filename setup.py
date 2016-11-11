@@ -2,7 +2,7 @@ import io
 import os
 from setuptools import setup, find_packages
 
-VERSION = '0.2.4'
+VERSION = '0.3.1'
 
 setup(
     name='forex-python',
