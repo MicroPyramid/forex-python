@@ -2,11 +2,7 @@ import io
 import os
 from setuptools import setup, find_packages
 
-VERSION = '0.2.3'
-
-with io.open(os.path.join(os.path.dirname(__file__), 'README.md'),  encoding='utf-8', errors='ignore') as readme:
-    LONG_DESCRIPTION = readme.read()
-
+VERSION = '0.2.4'
 
 setup(
     name='forex-python',
@@ -15,7 +11,7 @@ setup(
     author_email='hello@micropyramid.com',
     url='https://github.com/MicroPyramid/forex-python',
     description='Foreign exchange rates and currency conversion.',
-    long_description=LONG_DESCRIPTION,
+    long_description="\n\n".join([open("README.rst").read()]),
     packages=find_packages(exclude=['tests', 'tests.*']),
     include_package_data=True,
     install_requires=[
