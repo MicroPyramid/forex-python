@@ -36,7 +36,7 @@ The rates are updated daily 3PM CET.
 
 BitCoin Price Source:
 ---------------------
-Bitcoin prices calculated every minute. For more infomation visit [CoinDesk API](http://www.coindesk.com/api/).
+Bitcoin prices calculated every minute. For more information visit [CoinDesk API](http://www.coindesk.com/api/).
 
 Installation
 --------------

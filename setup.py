@@ -2,7 +2,7 @@ import io
 import os
 from setuptools import setup, find_packages
 
-VERSION = '0.3.1'
+VERSION = '0.3.2'
 
 setup(
     name='forex-python',
@@ -16,6 +16,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'requests',
+        'simplejson',
     ],
     classifiers=[
         'Intended Audience :: Developers',
