@@ -35,6 +35,23 @@ Currency Rates
      >>> c.convert('USD', 'INR', 10, date_obj)
      585.09
 
+7. Force use of Decimal::
+    >>> from forex_python.converter import CurrencyRates
+    >>> c = CurrencyRates(force_decimal=True)
+    >>> c.convert('USD', 'INR', Decimal('10.45'))
+    705.09
+    >>> c.convert('USD', 'INR', 10)
+    DecimalFloatMismatchError: convert requires amount parameter is of type Decimal when use_decimal=True
+
+8. Detect use of Decimal::
+    >>> from forex_python.converter import CurrencyRates
+    >>> c = CurrencyRates()
+    >>> c.convert('USD', 'INR', Decimal('10.45'))
+    705.09
+    >>> c.convert('USD', 'INR', 10)
+    674.73
+
+
 Bitcoin Prices:
 ---------------
 1. Get latest price of one Bitcoin::
@@ -98,6 +115,3 @@ Currency Symbols & Codes
      u'European Euro'
      >>> c.get_currency_name('INR')
      u'Indian rupee'
-
-
-

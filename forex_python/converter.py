@@ -1,6 +1,7 @@
 import os
-import json
+import simplejson as json
 import requests
+from decimal import Decimal
 
 
 class RatesNotAvailableError(Exception):
@@ -10,10 +11,17 @@ class RatesNotAvailableError(Exception):
     pass
 
 
+class DecimalFloatMismatchError(Exception):
+    """
+    A float has been supplied when force_decimal was set to True
+    """
+    pass
+
+
 class Common:
 
-    def __init__(self):
-        pass
+    def __init__(self, force_decimal=False):
+        self._force_decimal = force_decimal
 
     def _source_url(self):
         return "http://api.fixer.io/"
@@ -24,6 +32,16 @@ class Common:
         date_str = date_obj.strftime('%Y-%m-%d')
         return date_str
 
+    def _decode_rates(self, response, use_decimal=False):
+        if self._force_decimal or use_decimal:
+            decoded_data = json.loads(response.text, use_decimal=True).get('rates', {})
+        else:
+            decoded_data = response.json().get('rates', {})
+        return decoded_data
+
+    def _get_decoded_rate(self, response, dest_cur, use_decimal=False):
+        return self._decode_rates(response, use_decimal=use_decimal).get(dest_cur, None)
+
 
 class CurrencyRates(Common):
 
@@ -33,7 +51,7 @@ class CurrencyRates(Common):
         source_url = self._source_url() + date_str
         response = requests.get(source_url, params=payload)
         if response.status_code == 200:
-            rates = response.json().get('rates', {})
+            rates = self._decode_rates(response)
             return rates
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
@@ -43,7 +61,7 @@ class CurrencyRates(Common):
         source_url = self._source_url() + date_str
         response = requests.get(source_url, params=payload)
         if response.status_code == 200:
-            rate = response.json().get('rates', {}).get(dest_cur)
+            rate = self._get_decoded_rate(response, dest_cur)
             if not rate:
                 raise RatesNotAvailableError("Currency Rate {0} => {1} not available for Date {2}".format(
                     base_cur, dest_cur, date_str))
@@ -51,17 +69,24 @@ class CurrencyRates(Common):
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
     def convert(self, base_cur, dest_cur, amount, date_obj=None):
+        if isinstance(amount, Decimal):
+            use_decimal = True
+        else:
+            use_decimal = self._force_decimal
         date_str = self._get_date_string(date_obj)
         payload = {'base': base_cur, 'symbols': dest_cur}
         source_url = self._source_url() + date_str
         response = requests.get(source_url, params=payload)
         if response.status_code == 200:
-            rate = response.json().get('rates', {}).get(dest_cur, None)
+            rate = self._get_decoded_rate(response, dest_cur, use_decimal=use_decimal)
             if not rate:
                 raise RatesNotAvailableError("Currency {0} => {1} rate not available for Date {2}.".format(
                     source_url, dest_cur, date_str))
-            converted_amount = rate * amount
-            return converted_amount
+            try:
+                converted_amount = rate * amount
+                return converted_amount
+            except TypeError:
+                raise DecimalFloatMismatchError("convert requires amount parameter is of type Decimal when force_decimal=True")
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
 

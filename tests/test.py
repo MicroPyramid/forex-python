@@ -1,6 +1,9 @@
 import datetime
 from unittest import TestCase
-from forex_python.converter import get_rates, get_rate, convert, get_symbol, get_currency_name, RatesNotAvailableError
+from forex_python.converter import (get_rates, get_rate, convert, get_symbol,
+                                    get_currency_name, RatesNotAvailableError,
+                                    CurrencyRates, DecimalFloatMismatchError)
+from decimal import Decimal
 
 
 class TestGetRates(TestCase):
@@ -81,6 +84,66 @@ class TestAmountConvert(TestCase):
     def test_amount_convert_invalid_currency(self):
         # test if amount returned in float
         self.assertRaises(RatesNotAvailableError, convert, 'ABC', 'XYZ', 10)
+
+
+class TestForceDecimalAmountConvert(TestCase):
+    """
+    Test the force_decimal=True type enforcing
+    """
+
+    def setUp(self):
+        self.c = CurrencyRates(force_decimal=True)
+
+    def test_amount_decimal_convert(self):
+        amount = self.c.convert('USD', 'INR', Decimal('10.45'))
+
+        self.assertTrue(isinstance(amount, Decimal))
+
+    def test_amount_decimal_convert_date(self):
+        date_obj = datetime.datetime.strptime('2010-05-10', "%Y-%m-%d").date()
+        amount = self.c.convert('USD', 'INR', Decimal('10.45'), date_obj)
+
+        self.assertTrue(isinstance(amount, Decimal))
+
+    def test_amount_decimal_invalid_type(self):
+        self.assertRaises(DecimalFloatMismatchError, self.c.convert, 'USD', 'INR', 10.45)
+
+    def test_decimal_get_rates_valid_code(self):
+        all_rates = self.c.get_rates('USD')
+        # Check if return value of get_rates dictionary
+        self.assertTrue(isinstance(all_rates, dict))
+        # Test at least one rate value returned
+        self.assertTrue(len(all_rates.keys()))
+        # Test one rate in returned dict is now a Decimal
+        self.assertTrue(isinstance(all_rates.get('INR'), Decimal))
+
+    def test_decimal_get_rates_with_date(self):
+        date_obj = datetime.datetime.strptime('2010-05-10', "%Y-%m-%d").date()
+        all_rates = self.c.get_rates('USD', date_obj)
+        # Check if return value of get_rates dictionary
+        self.assertTrue(isinstance(all_rates, dict))
+        # Test at least one rate value returned
+        self.assertTrue(len(all_rates.keys()))
+        # Test one rate in returned dict is now a Decimal
+        self.assertTrue(isinstance(all_rates.get('INR'), Decimal))
+
+    def test_decimal_get_rates_invalid_code(self):
+        self.assertRaises(RatesNotAvailableError, self.c.get_rates, 'XYZ')
+
+    def test_decimal_get_rate_with_valid_codes(self):
+        rate = self.c.get_rate('USD', 'INR')
+        # check if return value is Decimal
+        self.assertTrue(isinstance(rate, Decimal))
+
+    def test_decimal_get_rate_with_date(self):
+        date_obj = datetime.datetime.strptime('2010-05-10', "%Y-%m-%d").date()
+        rate = self.c.get_rate('USD', 'INR', date_obj)
+        # check if return value is Decimal
+        self.assertTrue(isinstance(rate, Decimal))
+
+    def test_decimal_get_rate_with_invalid_codes(self):
+        # raise exception for invalid currency codes
+        self.assertRaises(RatesNotAvailableError, self.c.get_rate, 'ABCD', 'XYZ')
 
 
 class TestCurrencySymbol(TestCase):
