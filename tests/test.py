@@ -1,9 +1,9 @@
 import datetime
+from decimal import Decimal
 from unittest import TestCase
 from forex_python.converter import (get_rates, get_rate, convert, get_symbol,
                                     get_currency_name, RatesNotAvailableError,
                                     CurrencyRates, DecimalFloatMismatchError)
-from decimal import Decimal
 
 
 class TestGetRates(TestCase):

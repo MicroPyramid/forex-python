@@ -1,7 +1,7 @@
 import os
+from decimal import Decimal
 import simplejson as json
 import requests
-from decimal import Decimal
 
 
 class RatesNotAvailableError(Exception):
