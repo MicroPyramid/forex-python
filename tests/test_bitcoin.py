@@ -88,9 +88,7 @@ class TestConvertToBtcOn(TestCase):
 
     def test_convert_to_btc_on_with_invalid_currency(self):
         date_obj = datetime.datetime.today() - datetime.timedelta(days=15)
-        # coins = convert_to_btc_on(300, 'XYZ', date_obj)
         self.assertRaises(RatesNotAvailableError, convert_to_btc_on, 300, 'XYZ', date_obj)
-        # self.assertFalse(coins)
 
 
 class TestConvertBtcToCurOn(TestCase):
@@ -104,9 +102,7 @@ class TestConvertBtcToCurOn(TestCase):
 
     def test_convert_to_btc_on_with_invalid_currency(self):
         date_obj = datetime.datetime.today() - datetime.timedelta(days=15)
-        # amount = convert_btc_to_cur_on(3, 'XYZ', date_obj)
         self.assertRaises(RatesNotAvailableError, convert_btc_to_cur_on, 3, 'XYZ', date_obj)
-        # self.assertFalse(amount)
 
 
 class TestBitCoinSymbol(TestCase):
@@ -137,9 +133,7 @@ class TestBitCoinWithoutForceDecimal(TestCase):
 
     def test_previous_price_invalid_currency(self):
         date_obj = datetime.datetime.today() - datetime.timedelta(days=15)
-        # price = self.b.get_previous_price('XYZ', date_obj)
         self.assertRaises(RatesNotAvailableError, self.b.get_previous_price, 'XYZ', date_obj)
-        # self.assertFalse(price)
 
     def test_previous_price_list_with_valid_currency(self):
         start_date = datetime.datetime.today() - datetime.timedelta(days=15)
@@ -160,9 +154,7 @@ class TestBitCoinWithoutForceDecimal(TestCase):
         self.assertEqual(type(coins), float)
 
     def test_convet_to_btc_with_invalid_currency(self):
-        # coins = self.b.convert_to_btc(250, 'XYZ')
         self.assertRaises(RatesNotAvailableError, self.b.convert_to_btc, 250, 'XYZ')
-        # self.assertFalse(coins)
 
     def test_convert_btc_to_cur_valid_currency(self):
         amount = self.b.convert_btc_to_cur(2, 'USD')
@@ -178,9 +170,7 @@ class TestBitCoinWithoutForceDecimal(TestCase):
 
     def test_convert_to_btc_on_with_invalid_currency(self):
         date_obj = datetime.datetime.today() - datetime.timedelta(days=15)
-        # coins = self.b.convert_to_btc_on(300, 'XYZ', date_obj)
         self.assertRaises(RatesNotAvailableError, self.b.convert_to_btc_on, 300, 'XYZ', date_obj)
-        # self.assertFalse(coins)
 
     def test_convert_to_btc_on_with_valid_currency(self):
         date_obj = datetime.datetime.today() - datetime.timedelta(days=15)
@@ -189,9 +179,7 @@ class TestBitCoinWithoutForceDecimal(TestCase):
 
     def test_convert_to_btc_on_with_invalid_currency(self):
         date_obj = datetime.datetime.today() - datetime.timedelta(days=15)
-        # amount = self.b.convert_btc_to_cur_on(3, 'XYZ', date_obj)
         self.assertRaises(RatesNotAvailableError, self.b.convert_btc_to_cur_on, 3, 'XYZ', date_obj)
-        # self.assertFalse(amount)
 
 
 class TestBitCoinForceDecimal(TestCase):
@@ -214,9 +202,7 @@ class TestBitCoinForceDecimal(TestCase):
 
     def test_previous_price_invalid_currency(self):
         date_obj = datetime.datetime.today() - datetime.timedelta(days=15)
-        # price = self.b.get_previous_price('XYZ', date_obj)
         self.assertRaises(RatesNotAvailableError, self.b.get_previous_price, 'XYZ', date_obj)
-        # self.assertFalse(price)
 
     def test_previous_price_list_with_valid_currency(self):
         start_date = datetime.datetime.today() - datetime.timedelta(days=15)
@@ -233,39 +219,34 @@ class TestBitCoinForceDecimal(TestCase):
         self.assertEqual(type(price_list), dict)
 
     def test_convet_to_btc_with_valid_currency(self):
-        coins = self.b.convert_to_btc(250, 'USD')
+        coins = self.b.convert_to_btc(Decimal('250'), 'USD')
         self.assertEqual(type(coins), Decimal)
 
     def test_convet_to_btc_with_invalid_currency(self):
-        # coins = self.b.convert_to_btc(250, 'XYZ')
         self.assertRaises(RatesNotAvailableError, self.b.convert_to_btc, Decimal('250'), 'XYZ')
-        # self.assertFalse(coins)
 
     def test_convert_btc_to_cur_valid_currency(self):
-        amount = self.b.convert_btc_to_cur(2, 'USD')
+        amount = self.b.convert_btc_to_cur(Decimal('2'), 'USD')
         self.assertEqual(type(amount), Decimal)
 
     def test_convert_btc_to_cur_invalid_currency(self):
-        self.assertRaises(RatesNotAvailableError, self.b.convert_btc_to_cur, 2, 'XYZ')
+        self.assertRaises(RatesNotAvailableError, self.b.convert_btc_to_cur, Decimal('250'), 'XYZ')
 
     def test_convert_to_btc_on_with_valid_currency(self):
         date_obj = datetime.datetime.today() - datetime.timedelta(days=15)
-        coins = self.b.convert_to_btc_on(300, 'USD', date_obj)
+        coins = self.b.convert_to_btc_on(Decimal('300'), 'USD', date_obj)
         self.assertEqual(type(coins), Decimal)
 
     def test_convert_to_btc_on_with_invalid_currency(self):
         date_obj = datetime.datetime.today() - datetime.timedelta(days=15)
-        # coins = self.b.convert_to_btc_on(300, 'XYZ', date_obj)
         self.assertRaises(RatesNotAvailableError, self.b.convert_to_btc_on, Decimal('250'), 'XYZ', date_obj)
-        # self.assertFalse(coins)
 
     def test_convert_to_btc_on_with_valid_currency(self):
         date_obj = datetime.datetime.today() - datetime.timedelta(days=15)
-        amount = self.b.convert_btc_to_cur_on(3, 'USD', date_obj)
+        amount = self.b.convert_btc_to_cur_on(Decimal('250'), 'USD', date_obj)
         self.assertEqual(type(amount), Decimal)
 
     def test_convert_to_btc_on_with_invalid_currency(self):
         date_obj = datetime.datetime.today() - datetime.timedelta(days=15)
-        # amount = self.b.convert_btc_to_cur_on(3, 'XYZ', date_obj)
         self.assertRaises(RatesNotAvailableError, self.b.convert_btc_to_cur_on, Decimal('3'), 'XYZ', date_obj)
-        # self.assertFalse(amount)
+
