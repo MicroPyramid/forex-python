@@ -39,7 +39,7 @@ Currency Rates
     >>> from forex_python.converter import CurrencyRates
     >>> c = CurrencyRates(force_decimal=True)
     >>> c.convert('USD', 'INR', Decimal('10.45'))
-    705.09
+    Decimal('705.09')
     >>> c.convert('USD', 'INR', 10)
     DecimalFloatMismatchError: convert requires amount parameter is of type Decimal when use_decimal=True
 
@@ -47,7 +47,7 @@ Currency Rates
     >>> from forex_python.converter import CurrencyRates
     >>> c = CurrencyRates()
     >>> c.convert('USD', 'INR', Decimal('10.45'))
-    705.09
+    Decimal('705.09')
     >>> c.convert('USD', 'INR', 10)
     674.73
 
@@ -56,7 +56,7 @@ Bitcoin Prices:
 ---------------
 1. Get latest price of one Bitcoin::
      >>> from forex_python.bitcoin import BtcConverter
-     >>> b = BtcConverter()
+     >>> b = BtcConverter()   # add "force_decimal=True" parmeter to get Decimal rates
      >>> b.get_latest_price('EUR')   # you can directly call get_latest_price('EUR')
      476.5225  # return type float
 
@@ -94,7 +94,13 @@ Bitcoin Prices:
      >>> b.get_previous_price_list('INR', start_date, end_date)  # get_previous_price_list('INR', start_date, end_date)
      {u'2016-05-19': 29371.7579, u'2016-05-18': 30402.3169, u'2016-05-22': 29586.3631, u'2016-05-23': 29925.3272, u'2016-05-20': 29864.0256, u'2016-05-21': 29884.7449}
 
-8. Get Bitcoin symbol::
+8. Force use of Decimal::
+     >>> from forex_python.bitcoin import BtcConverter
+     >>> b = BtcConverter(force_decimal=True)
+     >>> b.get_latest_price('EUR')   # you can directly call get_latest_price('EUR')
+     Decimal('942.245000000000004547')  # return type Decimal
+
+9. Get Bitcoin symbol::
      >>> print(b.get_symbol())  # get_btc_symbol()
      ฿
 

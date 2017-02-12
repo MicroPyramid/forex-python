@@ -116,7 +116,7 @@ Usage Examples:
 
 			python
 			>>> from forex_python.bitcoin import BtcConverter
-			>>> b = BtcConverter()
+			>>> b = BtcConverter() # force_decimal=True to get Decimal rates
 			>>> b.get_latest_price('USD')
 			533.913
 
