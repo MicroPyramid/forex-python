@@ -1,8 +1,7 @@
 from decimal import Decimal
-from datetime import timedelta, datetime
 import simplejson as json
 import requests
-from converter import RatesNotAvailableError, DecimalFloatMismatchError
+from .converter import RatesNotAvailableError, DecimalFloatMismatchError
 
 
 class BtcConverter(object):
