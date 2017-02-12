@@ -86,6 +86,30 @@ Usage Examples:
 			>>> c.convert('USD', 'INR', 10)
 			674.73
 
+- Force use of Decimal
+
+	.. code-block:: python
+
+			python
+			>>> from forex_python.converter import CurrencyRates
+			>>> c = CurrencyRates(force_decimal=True)
+			>>> c.convert('USD', 'INR', Decimal('10.45'))
+			705.09
+			>>> c.convert('USD', 'INR', 10)
+			DecimalFloatMismatchError: convert requires amount parameter is of type Decimal when use_decimal=True
+
+- Detect use of Decimal
+
+	.. code-block:: python
+
+			python
+			>>> from forex_python.converter import CurrencyRates
+			>>> c = CurrencyRates()
+			>>> c.convert('USD', 'INR', Decimal('10.45'))
+			705.09
+			>>> c.convert('USD', 'INR', 10)
+			674.73
+
 - Get latest Bitcoin price.
 
 	.. code-block:: python

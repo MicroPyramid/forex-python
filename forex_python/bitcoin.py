@@ -132,7 +132,7 @@ class BtcConverter(object):
 
     def get_symbol(self):
         """
-        Here is Unicode symbol for bit coin
+        Here is Unicode symbol for bitcoin
         """
         return "\u0E3F"
 
