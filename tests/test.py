@@ -74,6 +74,11 @@ class TestAmountConvert(TestCase):
         # test if amount returned in float
         self.assertTrue(isinstance(amount, float))
 
+    def test_amount_convert_valid_currency_same_currency(self):
+        amount = convert('USD', 'USD', 10)
+        self.assertEqual(amount, 10)
+
+
     def test_amount_convert_date(self):
         date_obj = datetime.datetime.strptime('2010-05-10', "%Y-%m-%d").date()
         amount = convert('USD', 'INR', 10, date_obj)
