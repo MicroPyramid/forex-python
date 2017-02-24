@@ -69,10 +69,13 @@ class CurrencyRates(Common):
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
     def convert(self, base_cur, dest_cur, amount, date_obj=None):
+        if base_cur == dest_cur:
+            return amount
         if isinstance(amount, Decimal):
             use_decimal = True
         else:
             use_decimal = self._force_decimal
+
         date_str = self._get_date_string(date_obj)
         payload = {'base': base_cur, 'symbols': dest_cur}
         source_url = self._source_url() + date_str
