@@ -57,6 +57,8 @@ class CurrencyRates(Common):
 
     def get_rate(self, base_cur, dest_cur, date_obj=None):
         if base_cur == dest_cur:
+            if self._force_decimal:
+                return Decimal(1)
             return 1.
         date_str = self._get_date_string(date_obj)
         payload = {'base': base_cur, 'symbols': dest_cur}
@@ -71,12 +73,15 @@ class CurrencyRates(Common):
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
     def convert(self, base_cur, dest_cur, amount, date_obj=None):
-        if base_cur == dest_cur:
-            return amount
         if isinstance(amount, Decimal):
             use_decimal = True
         else:
             use_decimal = self._force_decimal
+
+        if base_cur == dest_cur:  # Return same amount if both base_cur, dest_cur are same
+            if use_decimal:
+                return Decimal(amount)
+            return float(amount)
 
         date_str = self._get_date_string(date_obj)
         payload = {'base': base_cur, 'symbols': dest_cur}

@@ -81,7 +81,7 @@ class TestAmountConvert(TestCase):
 
     def test_amount_convert_valid_currency_same_currency(self):
         amount = convert('USD', 'USD', 10)
-        self.assertEqual(amount, 10)
+        self.assertEqual(amount, float(10))
 
 
     def test_amount_convert_date(self):
@@ -106,8 +106,11 @@ class TestForceDecimalAmountConvert(TestCase):
 
     def test_amount_decimal_convert(self):
         amount = self.c.convert('USD', 'INR', Decimal('10.45'))
-
         self.assertTrue(isinstance(amount, Decimal))
+
+    def test_amount_decimal_convert_same_currency(self):
+        amount = self.c.convert('USD', 'USD', Decimal('10.45'))
+        self.assertEqual(amount, Decimal('10.45'))
 
     def test_amount_decimal_convert_date(self):
         date_obj = datetime.datetime.strptime('2010-05-10', "%Y-%m-%d").date()
@@ -144,6 +147,12 @@ class TestForceDecimalAmountConvert(TestCase):
         rate = self.c.get_rate('USD', 'INR')
         # check if return value is Decimal
         self.assertTrue(isinstance(rate, Decimal))
+
+    def test_decimal_get_rate_with_valid_same_codes(self):
+        rate = self.c.get_rate('USD', 'USD')
+        # check if return value is Decimal
+        self.assertEqual(rate, Decimal(1))
+
 
     def test_decimal_get_rate_with_date(self):
         date_obj = datetime.datetime.strptime('2010-05-10', "%Y-%m-%d").date()

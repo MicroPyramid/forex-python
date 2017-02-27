@@ -15,7 +15,7 @@ forex-python
     :target: https://pypi.python.org/pypi/forex-python
 
 
-`Forex Python`_ is a Free Foreign exchange rates and currency conversion.
+Forex Python is a Free Foreign exchange rates and currency conversion.
 
 Features:
 ---------
@@ -148,7 +148,6 @@ Visit our Python Development page `Here`_
 We welcome your feedback and support, raise `github ticket`_ if you want to report a bug. Need new features? `Contact us here`_
 
 .. _contact us here: https://micropyramid.com/contact-us/
-.. _Forex Python: https://micropyramid.com/oss/
 .. _github ticket: https://github.com/MicroPyramid/forex-python/issues
 .. _Documentation Here: http://forex-python.readthedocs.org/en/latest/?badge=latest
 .. _Here: https://micropyramid.com/python-development-services/
