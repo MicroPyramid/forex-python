@@ -50,6 +50,11 @@ class TestGetRate(TestCase):
 
         # check if return value is float
         self.assertTrue(isinstance(rate, float))
+    
+    def test_get_rate_with_valid_codes_same_currency(self):
+        rate = get_rate('USD', 'USD')
+        # rate should be 1.
+        self.assertEqual(1., rate)
 
     def test_get_rate_with_date(self):
         date_obj = datetime.datetime.strptime('2010-05-10', "%Y-%m-%d").date()
