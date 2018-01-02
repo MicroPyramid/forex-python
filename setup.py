@@ -3,6 +3,21 @@ import os
 from setuptools import setup, find_packages
 
 VERSION = '0.3.3'
+long_description_text = """Forex Python is a Free Foreign exchange rates and currency conversion.
+Features:
+List all currency rates.
+BitCoin price for all curuncies.
+Converting amount to BitCoins.
+Get historical rates for any day since 1999.
+Conversion rate for one currency(ex; USD to INR).
+Convert amount from one currency to other.('USD 10$' to INR).
+Currency symbols.
+Currency names.
+
+Documentation: http://forex-python.readthedocs.io/en/latest/usage.html
+GitHub: https://github.com/MicroPyramid/forex-python
+
+"""
 
 setup(
     name='forex-python',
@@ -11,7 +26,7 @@ setup(
     author_email='hello@micropyramid.com',
     url='https://github.com/MicroPyramid/forex-python',
     description='Foreign exchange rates and currency conversion.',
-    long_description="\n\n".join([open("README.rst", encoding='utf-8').read()]),
+    long_description=long_description_text,
     packages=find_packages(exclude=['tests', 'tests.*']),
     include_package_data=True,
     install_requires=[
