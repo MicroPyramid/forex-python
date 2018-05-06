@@ -6,7 +6,7 @@ import requests
 
 class RatesNotAvailableError(Exception):
     """
-    Custome Exception when http://fixer.io/ is Down are not available for currency rates
+    Custome Exception when https://ratesapi.io/api/ is Down are not available for currency rates
     """
     pass
 
@@ -24,7 +24,7 @@ class Common:
         self._force_decimal = force_decimal
 
     def _source_url(self):
-        return "http://api.fixer.io/"
+        return "http://ratesapi.io/api/"
 
     def _get_date_string(self, date_obj):
         if date_obj is None:
