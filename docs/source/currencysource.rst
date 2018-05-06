@@ -1,13 +1,13 @@
 currency source
 ===============
 
-fixer.io
+https://ratesapi.io/api/
 --------
-Fixer.io is a free API for current and historical foreign exchange rates published by European Central Bank. The rates are updated daily 3PM CET.
+https://ratesapi.io/api/ is a free API for current and historical foreign exchange rates published by European Central Bank. The rates are updated daily 3PM CET.
 
 List of Supported Currency codes.
 ---------------------------------
-**Updated On 2016-05-22**
+**Updated On 2018-05-08**
 
 |EUR - Euro Member Countries
 |IDR - Indonesia Rupiah

@@ -20,7 +20,7 @@ Forex Python is a Free Foreign exchange rates and currency conversion.
 Features:
 ---------
 - List all currency rates.
-- BitCoin price for all curuncies.
+- BitCoin price for all currencies.
 - Converting amount to BitCoins.
 - Get historical rates for any day since 1999.
 - Conversion rate for one currency(ex; USD to INR).
@@ -31,7 +31,7 @@ Features:
 Currency Source:
 -----------------
 
-Fixer.io is a free API for current and historical foreign exchange rates published by European Central Bank.
+https://ratesapi.io/api/ is a free API for current and historical foreign exchange rates published by European Central Bank.
 The rates are updated daily 3PM CET.
 
 BitCoin Price Source:
