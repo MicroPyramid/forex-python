@@ -26,8 +26,22 @@ parser.add_argument(
 )
 
 
-def conversion_result(amount, base, converted_amount, dest):
-    return "{} {} = {} {}".format(amount, base, converted_amount, dest)
+def symbol(currency_code):
+    sym = converter.get_symbol(currency_code)
+    if sym is not None:
+        return sym
+    else:
+        return currency_code
+
+
+def conversion_result(amount, base, converted_amount, dest, use_symbols=False):
+    if use_symbols:
+        return "{} {} = {} {}".format(
+            symbol(base), amount, symbol(dest), converted_amount
+        )
+    else:
+        return "{} {} = {} {}".format(amount, base, converted_amount, dest)
+
 
 
 def notify_posix(args):
@@ -38,7 +52,8 @@ def notify_posix(args):
         raise
     notify2.init("forex-python")
     notification = conversion_result(
-        1.0, args.base, converter.get_rate(args.base, args.dest), args.dest
+        1.0, args.base, converter.get_rate(args.base, args.dest), args.dest,
+        True
     )
     n = notify2.Notification(
         "forex-python", notification, "notification-message-im"  # Icon name
