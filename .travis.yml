@@ -6,12 +6,18 @@ python:
   - "3.4"
   - "3.5"
 
+addons:
+  apt:
+    packages:
+      - python3-notify2
+      - python-notify2
+      - dbus
+
 install:
   - python setup.py install
-  - pip install nose
   - pip install coveralls
 script:
-  - nosetests  --with-coverage --cover-package=forex_python
+  - coverage run --source=forex_python -m unittest discover
 
 after_success:
   coveralls
