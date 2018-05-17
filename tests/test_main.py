@@ -10,6 +10,9 @@ class TestCLI(unittest.TestCase):
         with open(os.devnull, "w") as null:
             run([], output=null)
 
+    def test_notify(self):
+        run(["--notify"])
+
     def test_options(self):
         with open(os.devnull, "w") as null:
             run(["-b", "GBP", "-d", "EUR", "-a", "121"], null)

@@ -6,6 +6,11 @@ python:
   - "3.4"
   - "3.5"
 
+addons:
+  apt:
+    packages:
+      - python-notify2
+
 install:
   - python setup.py install
   - pip install nose
