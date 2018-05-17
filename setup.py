@@ -45,4 +45,8 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Topic :: Software Development :: Internationalization',
     ],
+    entry_points={
+        'console_scripts':
+        ['forex-python=forex_python.__main__:run']
+    },
 )
