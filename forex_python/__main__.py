@@ -3,8 +3,11 @@
 
 Inspired by another package: anshulc95/exch
 """
+from __future__ import print_function
+
 import argparse
 import os
+import sys
 
 from . import converter
 
@@ -61,8 +64,8 @@ def notify_posix(args):
     n.show()
 
 
-def run():
-    args = parser.parse_args()
+def run(args=None, output=sys.stdout):
+    args = parser.parse_args(args)
     if args.notify:
         if os.name == "posix":
             notify_posix(args)
@@ -73,5 +76,6 @@ def run():
                 args.base,
                 converter.convert(args.base, args.dest, args.amount),
                 args.dest,
-            )
+            ),
+            file=output
         )
