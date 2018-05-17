@@ -18,7 +18,7 @@ install:
   - pip install coveralls
   - pip install pew
 script:
-  - pew toggleglobalsitepackages
+  - yes | pew toggleglobalsitepackages
   - nosetests  --with-coverage --cover-package=forex_python
 
 after_success:
