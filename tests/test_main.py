@@ -8,7 +8,7 @@ class TestCLI(unittest.TestCase):
 
     def test_defaults(self):
         with open(os.devnull, "w") as null:
-            run(output=null)
+            run([], output=null)
 
     def test_options(self):
         with open(os.devnull, "w") as null:
