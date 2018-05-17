@@ -9,13 +9,16 @@ python:
 addons:
   apt:
     packages:
+      - python3-notify2
       - python-notify2
 
 install:
   - python setup.py install
   - pip install nose
   - pip install coveralls
+  - pip install pew
 script:
+  - pew toggleglobalsitepackages
   - nosetests  --with-coverage --cover-package=forex_python
 
 after_success:
