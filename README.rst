@@ -14,8 +14,9 @@ forex-python
 .. image:: https://img.shields.io/badge/python-2.7%2C%203.3%2C%203.4%2C%203.5-blue.svg
     :target: https://pypi.python.org/pypi/forex-python
 
-
 Forex Python is a Free Foreign exchange rates and currency conversion.
+
+**Note: Install latest forex-python==1.0.0 to avoid RatesNotAvailableError**
 
 Features:
 ---------
