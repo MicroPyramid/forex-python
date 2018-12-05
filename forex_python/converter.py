@@ -150,3 +150,4 @@ _CURRENCY_CODES = CurrencyCodes()
 
 get_symbol = _CURRENCY_CODES.get_symbol
 get_currency_name = _CURRENCY_CODES.get_currency_name
+get_currency_code_from_symbol = _CURRENCY_CODES.get_currency_code_from_symbol
