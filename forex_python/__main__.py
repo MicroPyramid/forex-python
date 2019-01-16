@@ -69,6 +69,9 @@ def run(args=None, output=sys.stdout):
     if args.notify:
         if os.name == "posix":
             notify_posix(args)
+        else:
+            raise ValueError(
+                "The option [-n] is available only for POSIX operating systems")
     else:
         print(
             conversion_result(

@@ -1,4 +1,3 @@
-import io
 import os
 from setuptools import setup, find_packages
 
@@ -19,6 +18,17 @@ GitHub: https://github.com/MicroPyramid/forex-python
 
 """
 
+install_requires=[
+    'requests',
+    'simplejson',
+]
+
+if os.name == 'posix':
+    install_requires += [
+        'notify2',
+        'dbus-python'
+    ]
+
 setup(
     name='forex-python',
     version=VERSION,
@@ -29,10 +39,7 @@ setup(
     long_description=long_description_text,
     packages=find_packages(exclude=['tests', 'tests.*']),
     include_package_data=True,
-    install_requires=[
-        'requests',
-        'simplejson',
-    ],
+    install_requires=install_requires,
     classifiers=[
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
