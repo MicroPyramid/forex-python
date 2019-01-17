@@ -37,7 +37,11 @@ def symbol(currency_code):
         return currency_code
 
 
-def conversion_result(amount, base, converted_amount, dest, use_symbols=False):
+def conversion_result(args, use_symbols=False):
+    amount = args.amount
+    base = args.base
+    dest = args.dest
+    converted_amount = converter.convert(args.base, args.dest, args.amount)
     if use_symbols:
         return "{} {} = {} {}".format(
             symbol(base), amount, symbol(dest), converted_amount
@@ -54,10 +58,7 @@ def notify_posix(args):
         print("Requires Linux or macOS with notify2 and dbus package.")
         raise
     notify2.init("forex-python")
-    notification = conversion_result(
-        1.0, args.base, converter.get_rate(args.base, args.dest), args.dest,
-        True
-    )
+    notification = conversion_result(args, True)
     n = notify2.Notification(
         "forex-python", notification, "notification-message-im"  # Icon name
     )
@@ -73,12 +74,4 @@ def run(args=None, output=sys.stdout):
             raise ValueError(
                 "The option [-n] is available only for POSIX operating systems")
     else:
-        print(
-            conversion_result(
-                args.amount,
-                args.base,
-                converter.convert(args.base, args.dest, args.amount),
-                args.dest,
-            ),
-            file=output
-        )
+        print(conversion_result(args), file=output)
