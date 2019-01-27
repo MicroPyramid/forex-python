@@ -1,7 +1,7 @@
 import os
 from setuptools import setup, find_packages
 
-VERSION = '1.1'
+VERSION = '1.2'
 long_description_text = """Forex Python is a Free Foreign exchange rates and currency conversion.
 Features:
 List all currency rates.
