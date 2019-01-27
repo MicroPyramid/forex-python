@@ -1,6 +1,31 @@
 Usage Examples:
 ===============
 
+Command Line Interface
+----------------------
+
+- Display help and use the CLI to get quick answers from the terminal /
+  command line.
+
+.. code-block:: bash
+
+   ❯❯❯ forex-python -h
+   usage: forex-python [-h] [-b BASE] [-d DEST] [-a AMOUNT] [-n]
+
+   optional arguments:
+     -h, --help            show this help message and exit
+     -b BASE, --base BASE  Currency you are converting from. (default: USD)
+     -d DEST, --dest DEST  Currency you are converting to. (default: INR)
+     -a AMOUNT, --amount AMOUNT
+                           Amount to convert. (default: 1.0)
+     -n, --notify          Display desktop alerts. (default: False)
+   ❯❯❯ forex-python -b EUR
+   1.0 EUR = 81.0055 INR
+   ❯❯❯ forex-python -b EUR -d USD
+   1.0 EUR = 1.1389 USD
+   ❯❯❯ forex-python -b EUR -d USD -a 3.14
+   3.14 EUR = 3.576146 USD
+
 Currency Rates
 --------------
 1. list all latest currency rates for "USD"::

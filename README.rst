@@ -28,6 +28,7 @@ Features:
 - Convert amount from one currency to other.('USD 10$' to INR).
 - Currency symbols.
 - Currency names.
+- Command line interface (CLI).
 
 Currency Source:
 -----------------
@@ -141,6 +142,16 @@ Usage Examples:
 			>>> print c.get_symbol('GBP')
 			£
 
+- Use the CLI to get quick answers from the terminal / command line.
+
+         .. code-block:: bash
+
+                        ❯❯❯ forex-python -b EUR
+                        1.0 EUR = 81.0055 INR
+                        ❯❯❯ forex-python -b EUR -d USD
+                        1.0 EUR = 1.1389 USD
+                        ❯❯❯ forex-python -b EUR -d USD -a 3.14
+                        3.14 EUR = 3.576146 USD
 
 You can view the complete `Documentation Here`_
 
