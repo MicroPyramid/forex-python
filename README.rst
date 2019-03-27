@@ -3,16 +3,19 @@ forex-python
 
 .. image:: https://travis-ci.org/MicroPyramid/forex-python.svg?branch=master
    :target: https://travis-ci.org/MicroPyramid/forex-python
+   :alt: travis-ci
 
 .. image:: https://coveralls.io/repos/github/MicroPyramid/forex-python/badge.svg?branch=master
    :target: https://coveralls.io/github/MicroPyramid/forex-python?branch=master
+   :alt: coveralls
 
-.. image:: https://landscape.io/github/MicroPyramid/forex-python/master/landscape.svg?style=plastic
+.. image:: https://landscape.io/github/MicroPyramid/forex-python/master/landscape.svg?style=flat
    :target: https://landscape.io/github/MicroPyramid/forex-python/master
    :alt: Code Health
 
 .. image:: https://img.shields.io/badge/python-2.7%2C%203.3%2C%203.4%2C%203.5-blue.svg
     :target: https://pypi.python.org/pypi/forex-python
+	:alt: pypi
 
 Forex Python is a Free Foreign exchange rates and currency conversion.
 
