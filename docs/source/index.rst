@@ -6,7 +6,7 @@ Free Foreign exchange rates, bitcoin prices and currency conversion.
 Features:
 ---------
 - List all currency rates.
-- BitCoin price for all curuncies.
+- BitCoin price for all currencies.
 - Converting amount to BitCoins.
 - Get historical rates for any day since 1999.
 - Conversion rate for one currency(ex; USD to INR).
