@@ -20,6 +20,7 @@
   {"cc":"BOB","symbol":"Bs.","name":"Bolivian boliviano"},
   {"cc":"BRL","symbol":"R$","name":"Brazilian real"},
   {"cc":"BSD","symbol":"B$","name":"Bahamian dollar"},
+  {"cc":"BTC","symbol":"₿","name":"Bitcoin"},
   {"cc":"BTN","symbol":"Nu.","name":"Bhutanese ngultrum"},
   {"cc":"BWP","symbol":"P","name":"Botswana pula"},
   {"cc":"BYR","symbol":"Br","name":"Belarusian ruble"},
