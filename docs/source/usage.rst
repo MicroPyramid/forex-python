@@ -60,7 +60,7 @@ Bitcoin Prices:
      >>> b.get_latest_price('EUR')   # you can directly call get_latest_price('EUR')
      476.5225  # return type float
 
-2. Get price of Bitcoin based on prevois date::
+2. Get price of Bitcoin based on previous date::
      >>> date_obj
      datetime.datetime(2016, 5, 18, 19, 39, 36, 815417)
      >>> b.get_previous_price('USD', date_obj)  # get_previous_price('USD', date_obj)
