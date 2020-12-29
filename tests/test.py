@@ -39,6 +39,10 @@ class TestGetRates(TestCase):
     def test_get_rates_invalid_code(self):
         self.assertRaises(RatesNotAvailableError, get_rates, 'XYZ')
 
+    def test_get_rates_in_future(self):
+        future = datetime.date.today() + datetime.timedelta(days=1)
+        self.assertRaises(RatesNotAvailableError, get_rates, 'USD', future)
+
 
 class TestGetRate(TestCase):
     """
@@ -66,6 +70,11 @@ class TestGetRate(TestCase):
     def test_get_rate_with_invalid_codes(self):
         # raise exception for invalid currency codes
         self.assertRaises(RatesNotAvailableError, get_rate, 'ABCD', 'XYZ')
+
+    def test_get_rates_in_future(self):
+        future = datetime.date.today() + datetime.timedelta(days=1)
+        self.assertRaises(
+            RatesNotAvailableError, get_rate, 'EUR', 'USD', future)
 
 
 class TestAmountConvert(TestCase):
