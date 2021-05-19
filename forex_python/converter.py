@@ -24,7 +24,7 @@ class Common:
         self._force_decimal = force_decimal
 
     def _source_url(self):
-        return "https://api.ratesapi.io/api/"
+        return "https://exchangeratesapi.io"
 
     def _get_date_string(self, date_obj):
         if date_obj is None:
