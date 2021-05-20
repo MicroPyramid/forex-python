@@ -1,7 +1,8 @@
 import os
 from decimal import Decimal
-import simplejson as json
+
 import requests
+import simplejson as json
 
 
 class RatesNotAvailableError(Exception):
@@ -20,11 +21,12 @@ class DecimalFloatMismatchError(Exception):
 
 class Common:
 
-    def __init__(self, force_decimal=False):
+    def __init__(self, force_decimal=False, use_https=False):
         self._force_decimal = force_decimal
+        self.protocol = "https://" if use_https else "http://"
 
     def _source_url(self):
-        return "https://api.ratesapi.io/api/"
+        return self.protocol + "api.exchangeratesapi.io/v1/"
 
     def _get_date_string(self, date_obj):
         if date_obj is None:
@@ -44,12 +46,14 @@ class Common:
 
 
 class CurrencyRates(Common):
+    def __init__(self, access_key, use_https=False, force_decimal=False):
+        super().__init__(force_decimal, use_https)
+        self.access_key = access_key
 
     def get_rates(self, base_cur, date_obj=None):
         date_str = self._get_date_string(date_obj)
-        payload = {'base': base_cur, 'rtype': 'fpy'}
-        source_url = self._source_url() + date_str
-        response = requests.get(source_url, params=payload)
+        source_url = self._source_url() + date_str + "?access_key=%s" % self.access_key
+        response = requests.get(source_url)
         if response.status_code == 200:
             rates = self._decode_rates(response)
             return rates
@@ -61,9 +65,8 @@ class CurrencyRates(Common):
                 return Decimal(1)
             return 1.
         date_str = self._get_date_string(date_obj)
-        payload = {'base': base_cur, 'symbols': dest_cur, 'rtype': 'fpy'}
-        source_url = self._source_url() + date_str
-        response = requests.get(source_url, params=payload)
+        source_url = self._source_url() + date_str + "?access_key=%s" % self.access_key
+        response = requests.get(source_url)
         if response.status_code == 200:
             rate = self._get_decoded_rate(response, dest_cur)
             if not rate:
@@ -84,9 +87,8 @@ class CurrencyRates(Common):
             return float(amount)
 
         date_str = self._get_date_string(date_obj)
-        payload = {'base': base_cur, 'symbols': dest_cur, 'rtype': 'fpy'}
-        source_url = self._source_url() + date_str
-        response = requests.get(source_url, params=payload)
+        source_url = self._source_url() + date_str + "?access_key=%s" % self.access_key
+        response = requests.get(source_url)
         if response.status_code == 200:
             rate = self._get_decoded_rate(response, dest_cur, use_decimal=use_decimal)
             if not rate:
@@ -96,7 +98,8 @@ class CurrencyRates(Common):
                 converted_amount = rate * amount
                 return converted_amount
             except TypeError:
-                raise DecimalFloatMismatchError("convert requires amount parameter is of type Decimal when force_decimal=True")
+                raise DecimalFloatMismatchError(
+                    "convert requires amount parameter is of type Decimal when force_decimal=True")
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
 
@@ -114,7 +117,7 @@ class CurrencyCodes:
 
     def _get_data(self, currency_code):
         file_path = os.path.dirname(os.path.abspath(__file__))
-        with open(file_path+'/raw_data/currencies.json') as f:
+        with open(file_path + '/raw_data/currencies.json') as f:
             currency_data = json.loads(f.read())
         currency_dict = next((item for item in currency_data if item["cc"] == currency_code), None)
         return currency_dict
@@ -146,7 +149,6 @@ class CurrencyCodes:
 
 
 _CURRENCY_CODES = CurrencyCodes()
-
 
 get_symbol = _CURRENCY_CODES.get_symbol
 get_currency_name = _CURRENCY_CODES.get_currency_name
