@@ -102,8 +102,8 @@ class CurrencyRates(Common):
                     "convert requires amount parameter is of type Decimal when force_decimal=True")
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
-
-_CURRENCY_FORMATTER = CurrencyRates()
+# Please add your access key here
+_CURRENCY_FORMATTER = CurrencyRates("your_access_key")
 
 get_rates = _CURRENCY_FORMATTER.get_rates
 get_rate = _CURRENCY_FORMATTER.get_rate
