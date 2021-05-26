@@ -102,7 +102,7 @@ class TestForceDecimalAmountConvert(TestCase):
     """
 
     def setUp(self):
-        self.c = CurrencyRates(force_decimal=True)
+        self.c = CurrencyRates("your_access_key", force_decimal=True)
 
     def test_amount_decimal_convert(self):
         amount = self.c.convert('USD', 'INR', Decimal('10.45'))

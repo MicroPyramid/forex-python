@@ -12,6 +12,13 @@ class RatesNotAvailableError(Exception):
     pass
 
 
+class BaseCurrencyAccessRestricted(Exception):
+    """
+    Custome Exception if access key doesn't have permission to change base currency
+    """
+    pass
+
+
 class DecimalFloatMismatchError(Exception):
     """
     A float has been supplied when force_decimal was set to True
@@ -52,11 +59,17 @@ class CurrencyRates(Common):
 
     def get_rates(self, base_cur, date_obj=None):
         date_str = self._get_date_string(date_obj)
-        source_url = self._source_url() + date_str + "?access_key=%s" % self.access_key
+
+        source_url = self._source_url() + date_str \
+                     + "?access_key=%s" % self.access_key \
+                     + "&base=%s" % base_cur
         response = requests.get(source_url)
         if response.status_code == 200:
             rates = self._decode_rates(response)
             return rates
+        if response.json()['error']['code'] == "base_currency_access_restricted":
+            raise BaseCurrencyAccessRestricted("Source currency switching is not allowed with this access "
+                                               "key")
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
     def get_rate(self, base_cur, dest_cur, date_obj=None):
@@ -65,7 +78,10 @@ class CurrencyRates(Common):
                 return Decimal(1)
             return 1.
         date_str = self._get_date_string(date_obj)
-        source_url = self._source_url() + date_str + "?access_key=%s" % self.access_key
+        source_url = self._source_url() + date_str \
+                     + "?access_key=%s" % self.access_key \
+                     + "&base=%s" % base_cur \
+                     + "&symbols=%s" % dest_cur
         response = requests.get(source_url)
         if response.status_code == 200:
             rate = self._get_decoded_rate(response, dest_cur)
@@ -73,6 +89,9 @@ class CurrencyRates(Common):
                 raise RatesNotAvailableError("Currency Rate {0} => {1} not available for Date {2}".format(
                     base_cur, dest_cur, date_str))
             return rate
+        if response.json()['error']['code'] == "base_currency_access_restricted":
+            raise BaseCurrencyAccessRestricted("Source currency switching is not allowed with this access "
+                                               "key")
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
     def convert(self, base_cur, dest_cur, amount, date_obj=None):
@@ -87,7 +106,9 @@ class CurrencyRates(Common):
             return float(amount)
 
         date_str = self._get_date_string(date_obj)
-        source_url = self._source_url() + date_str + "?access_key=%s" % self.access_key
+        source_url = self._source_url() + date_str + "?access_key=%s" % self.access_key \
+                     + "&base=%s" % base_cur \
+                     + "&symbols=%s" % dest_cur
         response = requests.get(source_url)
         if response.status_code == 200:
             rate = self._get_decoded_rate(response, dest_cur, use_decimal=use_decimal)
@@ -100,7 +121,11 @@ class CurrencyRates(Common):
             except TypeError:
                 raise DecimalFloatMismatchError(
                     "convert requires amount parameter is of type Decimal when force_decimal=True")
+        if response.json()['error']['code'] == "base_currency_access_restricted":
+            raise BaseCurrencyAccessRestricted("Source currency switching is not allowed with this access "
+                                               "key")
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
+
 
 # Please add your access key here
 _CURRENCY_FORMATTER = CurrencyRates("your_access_key")
