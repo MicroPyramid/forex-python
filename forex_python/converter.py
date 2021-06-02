@@ -32,15 +32,21 @@ class Common:
         date_str = date_obj.strftime('%Y-%m-%d')
         return date_str
 
-    def _decode_rates(self, response, use_decimal=False):
+    def _decode_rates(self, response, use_decimal=False, date_str=None):
         if self._force_decimal or use_decimal:
-            decoded_data = json.loads(response.text, use_decimal=True).get('rates', {})
+            decoded_data = json.loads(response.text, use_decimal=True)
         else:
-            decoded_data = response.json().get('rates', {})
-        return decoded_data
+            decoded_data = response.json()
+        if (date_str and date_str != 'latest'
+                and date_str != decoded_data.get('date')):
+            raise RatesNotAvailableError("Currency Rates Source Not Ready")
+        return decoded_data.get('rates', {})
 
-    def _get_decoded_rate(self, response, dest_cur, use_decimal=False):
-        return self._decode_rates(response, use_decimal=use_decimal).get(dest_cur, None)
+    def _get_decoded_rate(
+            self, response, dest_cur, use_decimal=False, date_str=None):
+        return self._decode_rates(
+            response, use_decimal=use_decimal, date_str=date_str).get(
+                dest_cur, None)
 
 
 class CurrencyRates(Common):
@@ -51,7 +57,7 @@ class CurrencyRates(Common):
         source_url = self._source_url() + date_str
         response = requests.get(source_url, params=payload)
         if response.status_code == 200:
-            rates = self._decode_rates(response)
+            rates = self._decode_rates(response, date_str=date_str)
             return rates
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
@@ -65,7 +71,7 @@ class CurrencyRates(Common):
         source_url = self._source_url() + date_str
         response = requests.get(source_url, params=payload)
         if response.status_code == 200:
-            rate = self._get_decoded_rate(response, dest_cur)
+            rate = self._get_decoded_rate(response, dest_cur, date_str=date_str)
             if not rate:
                 raise RatesNotAvailableError("Currency Rate {0} => {1} not available for Date {2}".format(
                     base_cur, dest_cur, date_str))
@@ -88,7 +94,8 @@ class CurrencyRates(Common):
         source_url = self._source_url() + date_str
         response = requests.get(source_url, params=payload)
         if response.status_code == 200:
-            rate = self._get_decoded_rate(response, dest_cur, use_decimal=use_decimal)
+            rate = self._get_decoded_rate(
+                response, dest_cur, use_decimal=use_decimal, date_str=date_str)
             if not rate:
                 raise RatesNotAvailableError("Currency {0} => {1} rate not available for Date {2}.".format(
                     source_url, dest_cur, date_str))
