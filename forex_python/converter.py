@@ -6,7 +6,7 @@ import requests
 
 class RatesNotAvailableError(Exception):
     """
-    Custome Exception when https://ratesapi.io is Down and not available for currency rates
+    Custome Exception when https://theforexapi.com is Down and not available for currency rates
     """
     pass
 
