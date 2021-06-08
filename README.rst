@@ -19,7 +19,7 @@ forex-python
 
 Forex Python is a Free Foreign exchange rates and currency conversion.
 
-**Note: Install latest forex-python==1.5 to avoid RatesNotAvailableError**
+**Note: Install latest forex-python==1.6 to avoid RatesNotAvailableError**
 
 Features of Forex Python:
 ---------
