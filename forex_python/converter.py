@@ -37,9 +37,8 @@ class Common:
             decoded_data = json.loads(response.text, use_decimal=True)
         else:
             decoded_data = response.json()
-        if (date_str and date_str != 'latest'
-                and date_str != decoded_data.get('date')):
-            raise RatesNotAvailableError("Currency Rates Source Not Ready")
+        # if (date_str and date_str != 'latest' and date_str != decoded_data.get('date')):
+        #     raise RatesNotAvailableError("Currency Rates Source Not Ready")
         return decoded_data.get('rates', {})
 
     def _get_decoded_rate(
