@@ -1,5 +1,5 @@
-import os
 from decimal import Decimal
+from pathlib import Path
 
 import requests
 import simplejson as json
@@ -123,10 +123,22 @@ class CurrencyCodes:
     @property
     def _currency_data(self):
         if self.__currency_data is None:
-            file_path = os.path.dirname(os.path.abspath(__file__))
-            with open(file_path + '/raw_data/currencies.json') as f:
-                self.__currency_data = json.loads(f.read())
+            currency_codes_file_path = Path(__file__).parent / 'raw_data/currencies.json'
+            self.__currency_data = json.loads(currency_codes_file_path.read_text())
         return self.__currency_data
+
+    def __iter__(self):
+        self._iter_idx = 0
+        return self
+
+    def __next__(self) -> dict:
+        if not hasattr(self, '_iter_idx'):
+            self.__iter__()
+        if self._iter_idx < len(self._currency_data):
+            next_data = self._currency_data[self._iter_idx]
+            self._iter_idx += 1
+            return next_data
+        raise StopIteration
 
     def _get_data(self, currency_code):
         currency_dict = next((item for item in self._currency_data if item["cc"] == currency_code), None)
