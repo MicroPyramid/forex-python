@@ -1,7 +1,8 @@
 import os
 from decimal import Decimal
-import simplejson as json
+
 import requests
+import simplejson as json
 
 
 class RatesNotAvailableError(Exception):
@@ -45,7 +46,7 @@ class Common:
             self, response, dest_cur, use_decimal=False, date_str=None):
         return self._decode_rates(
             response, use_decimal=use_decimal, date_str=date_str).get(
-                dest_cur, None)
+            dest_cur, None)
 
 
 class CurrencyRates(Common):
@@ -102,7 +103,8 @@ class CurrencyRates(Common):
                 converted_amount = rate * amount
                 return converted_amount
             except TypeError:
-                raise DecimalFloatMismatchError("convert requires amount parameter is of type Decimal when force_decimal=True")
+                raise DecimalFloatMismatchError(
+                    "convert requires amount parameter is of type Decimal when force_decimal=True")
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
 
@@ -120,7 +122,7 @@ class CurrencyCodes:
 
     def _get_data(self, currency_code):
         file_path = os.path.dirname(os.path.abspath(__file__))
-        with open(file_path+'/raw_data/currencies.json') as f:
+        with open(file_path + '/raw_data/currencies.json') as f:
             currency_data = json.loads(f.read())
         currency_dict = next((item for item in currency_data if item["cc"] == currency_code), None)
         return currency_dict
@@ -152,7 +154,6 @@ class CurrencyCodes:
 
 
 _CURRENCY_CODES = CurrencyCodes()
-
 
 get_symbol = _CURRENCY_CODES.get_symbol
 get_currency_name = _CURRENCY_CODES.get_currency_name
