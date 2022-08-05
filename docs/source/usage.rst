@@ -76,7 +76,7 @@ Bitcoin Prices:
      >>> b.convert_to_btc_on(5000, 'USD', date_obj)   # convert_to_btc_on(5000, 'USD', date_obj)
      11.028325150316071
 
-5. Convert Bitcoins to valid currency amount based on lates price::
+5. Convert Bitcoins to valid currency amount based on latest price::
      >>> b.convert_btc_to_cur(1.25, 'USD')   # convert_btc_to_cur(1.25, 'USD')
      668.1012499999999
 
