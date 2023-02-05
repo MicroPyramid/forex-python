@@ -7,7 +7,7 @@ import simplejson as json
 
 class RatesNotAvailableError(Exception):
     """
-    Custome Exception when https://theforexapi.com is Down and not available for currency rates
+    Custom Exception when https://theforexapi.com is down and not available for currency rates
     """
     pass
 
