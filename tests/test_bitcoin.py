@@ -55,7 +55,7 @@ class TestPreviousPriceList(TestCase):
 
 class TestConvertBtc(TestCase):
     """
-    Test Converting amount to Bit coins
+    Test converting amount to Bitcoin
     """
     def test_convet_to_btc_with_valid_currency(self):
         coins = convert_to_btc(250, 'USD')
@@ -67,7 +67,7 @@ class TestConvertBtc(TestCase):
 
 class TestConvertBtcToCur(TestCase):
     """
-    Convert Bit Coins to Valid Currency amount
+    Convert Bitcoin to valid currency amount
     """
     def test_convert_btc_to_cur_valid_currency(self):
         amount = convert_btc_to_cur(2, 'USD')
@@ -79,7 +79,7 @@ class TestConvertBtcToCur(TestCase):
 
 class TestConvertToBtcOn(TestCase):
     """
-    Convert To bit coin based on previous dates
+    Convert to Bitcoin based on previous date
     """
     def test_convert_to_btc_on_with_valid_currency(self):
         date_obj = datetime.datetime.today() - datetime.timedelta(days=15)
@@ -93,7 +93,7 @@ class TestConvertToBtcOn(TestCase):
 
 class TestConvertBtcToCurOn(TestCase):
     """
-    Convert BitCoins to valid Currency
+    Convert Bitcoin to valid currency
     """
     def test_convert_to_btc_on_with_valid_currency(self):
         date_obj = datetime.datetime.today() - datetime.timedelta(days=15)
@@ -107,7 +107,7 @@ class TestConvertBtcToCurOn(TestCase):
 
 class TestBitCoinSymbol(TestCase):
     """
-    Bit Coin symbol
+    Bitcoin symbol
     """
     def test_bitcoin_symbol(self):
         self.assertEqual(get_btc_symbol(), "\u0E3F")
@@ -218,11 +218,11 @@ class TestBitCoinForceDecimal(TestCase):
         self.assertFalse(price_list)
         self.assertEqual(type(price_list), dict)
 
-    def test_convet_to_btc_with_valid_currency(self):
+    def test_convert_to_btc_with_valid_currency(self):
         coins = self.b.convert_to_btc(Decimal('250'), 'USD')
         self.assertEqual(type(coins), Decimal)
 
-    def test_convet_to_btc_with_invalid_currency(self):
+    def test_convert_to_btc_with_invalid_currency(self):
         self.assertRaises(RatesNotAvailableError, self.b.convert_to_btc, Decimal('250'), 'XYZ')
 
     def test_convert_btc_to_cur_valid_currency(self):
