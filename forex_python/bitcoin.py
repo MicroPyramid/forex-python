@@ -6,7 +6,7 @@ from .converter import RatesNotAvailableError, DecimalFloatMismatchError
 
 class BtcConverter(object):
     """
-    Get bit coin rates and convertion
+    Get Bitcoin rates and conversion
     """
     def __init__(self, force_decimal=False):
         self._force_decimal = force_decimal
@@ -20,7 +20,7 @@ class BtcConverter(object):
 
     def get_latest_price(self, currency):
         """
-        Get Lates price of one bitcoin to valid Currency 1BTC => X USD
+        Get latest price of one Bitcoin to valid currency 1BTC => X USD
         """
         url = 'https://api.coindesk.com/v1/bpi/currentprice/{}.json'.format(currency)
         response = requests.get(url)
@@ -34,7 +34,7 @@ class BtcConverter(object):
 
     def get_previous_price(self, currency, date_obj):
         """
-        Get Price for one bit coin on given date
+        Get price for one Bitcoin on given date
         """
         start = date_obj.strftime('%Y-%m-%d')
         end = date_obj.strftime('%Y-%m-%d')
@@ -55,7 +55,7 @@ class BtcConverter(object):
 
     def get_previous_price_list(self, currency, start_date, end_date):
         """
-        Get List of prices between two dates
+        Get list of Bitcoin prices between two dates
         """
         start = start_date.strftime('%Y-%m-%d')
         end = end_date.strftime('%Y-%m-%d')
@@ -74,7 +74,7 @@ class BtcConverter(object):
 
     def convert_to_btc(self, amount, currency):
         """
-        Convert X amount to Bit Coins
+        Convert X amount to Bitcoin
         """
         if isinstance(amount, Decimal):
             use_decimal = True
@@ -98,7 +98,7 @@ class BtcConverter(object):
 
     def convert_btc_to_cur(self, coins, currency):
         """
-        Convert X bit coins to valid currency amount
+        Convert X Bitcoin to valid currency amount
         """
         if isinstance(coins, Decimal):
             use_decimal = True
@@ -122,7 +122,7 @@ class BtcConverter(object):
 
     def convert_to_btc_on(self, amount, currency, date_obj):
         """
-        Convert X amount to BTC based on given date rate
+        Convert X amount to Bitcoin based on a given date's rate
         """
         if isinstance(amount, Decimal):
             use_decimal = True
@@ -149,11 +149,11 @@ class BtcConverter(object):
                     return converted_btc
                 except TypeError:
                     raise DecimalFloatMismatchError("convert_to_btc_on requires amount parameter is of type Decimal when force_decimal=True")
-        raise RatesNotAvailableError("BitCoin Rates Source Not Ready For Given Date")
+        raise RatesNotAvailableError("Bitcoin rates source not ready for given date")
 
     def convert_btc_to_cur_on(self, coins, currency, date_obj):
         """
-        Convert X BTC to valid currency amount based on given date
+        Convert X Bitcoin to valid currency amount based on given's date rate
         """
         if isinstance(coins, Decimal):
             use_decimal = True
@@ -180,11 +180,11 @@ class BtcConverter(object):
                     return converted_btc
                 except TypeError:
                     raise DecimalFloatMismatchError("convert_btc_to_cur_on requires amount parameter is of type Decimal when force_decimal=True")
-        raise RatesNotAvailableError("BitCoin Rates Source Not Ready For Given Date")
+        raise RatesNotAvailableError("Bitcoin rates source not ready for given date")
 
     def get_symbol(self):
         """
-        Here is Unicode symbol for bitcoin
+        Here is the Unicode symbol for Bitcoin:
         """
         return "\u0E3F"
 

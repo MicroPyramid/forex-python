@@ -66,21 +66,21 @@ Bitcoin Prices:
      >>> b.get_previous_price('USD', date_obj)  # get_previous_price('USD', date_obj)
      453.378
 
-3. Convert Amout to bitcoins::
+3. Convert Amount to Bitcoin::
      >>> b.convert_to_btc(5000, 'USD')  # convert_to_btc(5000, 'USD')
      9.36345369116708
 
-4. Convert Amount to bitcoins based on previous date prices::
+4. Convert Amount to Bitcoin based on previous date prices::
      >>> date_obj
      datetime.datetime(2016, 5, 18, 19, 39, 36, 815417)
      >>> b.convert_to_btc_on(5000, 'USD', date_obj)   # convert_to_btc_on(5000, 'USD', date_obj)
      11.028325150316071
 
-5. Convert Bitcoins to valid currency amount based on latest price::
+5. Convert Bitcoin to valid currency amount based on latest price::
      >>> b.convert_btc_to_cur(1.25, 'USD')   # convert_btc_to_cur(1.25, 'USD')
      668.1012499999999
 
-6. Convert Bitcoins to valid currency amount based on previous date price::
+6. Convert Bitcoin to valid currency amount based on previous date price::
      >>> date_obj
      datetime.datetime(2016, 5, 18, 19, 39, 36, 815417)
      >>> b.convert_btc_to_cur_on(1.25, 'EUR', date_obj)
@@ -106,7 +106,7 @@ Bitcoin Prices:
 
 Currency Symbols & Codes
 -------------------------
-1. Get Currency symbol Using currency code::
+1. Get currency symbol using currency code::
      >>> from forex_python.converter import CurrencyCodes
      >>> c = CurrencyCodes()
      >>> c.get_symbol('GBP')
@@ -116,8 +116,8 @@ Currency Symbols & Codes
      >>> print c.get_symbol('EUR')
      €
 
-2. Get Currency Name using currency code::
+2. Get currency name using currency code::
      >>> c.get_currency_name('EUR')
      u'European Euro'
      >>> c.get_currency_name('INR')
-     u'Indian rupee'
+     u'Indian Rupee'
