@@ -21,6 +21,8 @@ Forex Python is a Free Foreign exchange rates and currency conversion.
 
 **Note: Install latest forex-python==1.6 to avoid RatesNotAvailableError**
 
+[![RunCode](https://runcode-app-public.s3.amazonaws.com/images/dark_btn.png)](https://runcode.io)
+
 Features of Forex Python:
 ---------
 - List all currency rates.
