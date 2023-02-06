@@ -14,14 +14,17 @@ forex-python
    :alt: Code Health
 
 .. image:: https://img.shields.io/badge/python-2.7%2C%203.3%2C%203.4%2C%203.5-blue.svg
-    :target: https://pypi.python.org/pypi/forex-python
-	:alt: pypi
+   :target: https://pypi.python.org/pypi/forex-python
+   :alt: pypi
 
 Forex Python is a Free Foreign exchange rates and currency conversion.
 
 **Note: Install latest forex-python==1.6 to avoid RatesNotAvailableError**
 
-[![RunCode](https://runcode-app-public.s3.amazonaws.com/images/dark_btn.png)](https://runcode.io)
+.. image:: https://runcode-app-public.s3.amazonaws.com/images/dark_btn.png
+   :target: https://runcode.io
+   :alt: RunCode
+
 
 Features of Forex Python:
 ---------
