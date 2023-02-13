@@ -33,7 +33,7 @@ class Common:
         date_str = date_obj.strftime('%Y-%m-%d')
         return date_str
 
-    def _decode_rates(self, response, use_decimal=False, date_str=None,base_cur=None):
+    def _decode_rates(self, response, use_decimal=False, date_str=None, base_cur=None):
         if self._force_decimal or use_decimal:
             decoded_data = json.loads(response.text, use_decimal=True)
         else:
@@ -59,7 +59,7 @@ class CurrencyRates(Common):
         source_url = self._source_url() + date_str
         response = requests.get(source_url, params=payload)
         if response.status_code == 200:
-            rates = self._decode_rates(response,date_str=date_str,base_cur=base_cur)
+            rates = self._decode_rates(response,date_str=date_str, base_cur=base_cur)
             return rates
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
