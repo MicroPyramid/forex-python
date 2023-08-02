@@ -25,7 +25,13 @@ class Common:
         self._force_decimal = force_decimal
 
     def _source_url(self):
-        return "https://theforexapi.com/api/"
+        return None
+
+    def _request(self, url, params):
+        try:
+            return requests.get(url, params=params)
+        except:
+            raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
     def _get_date_string(self, date_obj):
         if date_obj is None:
@@ -33,13 +39,16 @@ class Common:
         date_str = date_obj.strftime('%Y-%m-%d')
         return date_str
 
-    def _decode_rates(self, response, use_decimal=False, date_str=None):
+    def _decode_rates(self, response, use_decimal=False, date_str=None, base_cur=None):
         if self._force_decimal or use_decimal:
             decoded_data = json.loads(response.text, use_decimal=True)
         else:
             decoded_data = response.json()
         # if (date_str and date_str != 'latest' and date_str != decoded_data.get('date')):
         #     raise RatesNotAvailableError("Currency Rates Source Not Ready")
+        if base_cur != None and base_cur != decoded_data['base']:
+            raise RatesNotAvailableError("Currency Rates Source Not Ready")
+        
         return decoded_data.get('rates', {})
 
     def _get_decoded_rate(
@@ -49,27 +58,26 @@ class Common:
             dest_cur, None)
 
 
-class CurrencyRates(Common):
-
+class CurrencyRatesBase(Common):
     def get_rates(self, base_cur, date_obj=None):
         date_str = self._get_date_string(date_obj)
         payload = {'base': base_cur, 'rtype': 'fpy'}
         source_url = self._source_url() + date_str
-        response = requests.get(source_url, params=payload)
+        response = self._request(source_url, params=payload)
         if response.status_code == 200:
             rates = self._decode_rates(response, date_str=date_str)
             return rates
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
-    def get_rate(self, base_cur, dest_cur, date_obj=None):
+    def get_rate(self, base_cur, dest_cur, date_obj=None, use_decimal=False):
         if base_cur == dest_cur:
-            if self._force_decimal:
+            if use_decimal or self._force_decimal:
                 return Decimal(1)
             return 1.
         date_str = self._get_date_string(date_obj)
         payload = {'base': base_cur, 'symbols': dest_cur, 'rtype': 'fpy'}
         source_url = self._source_url() + date_str
-        response = requests.get(source_url, params=payload)
+        response = self._request(source_url, params=payload)
         if response.status_code == 200:
             rate = self._get_decoded_rate(response, dest_cur, date_str=date_str)
             if not rate:
@@ -79,35 +87,61 @@ class CurrencyRates(Common):
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
     def convert(self, base_cur, dest_cur, amount, date_obj=None):
+        use_decimal = False
         if isinstance(amount, Decimal):
             use_decimal = True
-        else:
-            use_decimal = self._force_decimal
+        elif self._force_decimal:
+            raise DecimalFloatMismatchError("Decimal is forced. Amount must be Decimal")
 
         if base_cur == dest_cur:  # Return same amount if both base_cur, dest_cur are same
-            if use_decimal:
-                return Decimal(amount)
-            return float(amount)
+            return amount
+        
+        rate = self.get_rate(base_cur, dest_cur, date_obj=date_obj, use_decimal=use_decimal)
 
+        return rate * amount
+
+class CurrencyRatesForexAPI(CurrencyRatesBase):
+    def _source_url(self):
+        return "https://theforexapi.com/api/"
+
+class CurrencyRatesExchangeRateHost(CurrencyRatesBase):
+    def _source_url(self):
+        return "https://api.exchangerate.host/"
+    
+    def get_rates(self, base_cur, date_obj=None):
         date_str = self._get_date_string(date_obj)
-        payload = {'base': base_cur, 'symbols': dest_cur, 'rtype': 'fpy'}
+        payload = {'base': base_cur, 'rtype': 'fpy'}
         source_url = self._source_url() + date_str
-        response = requests.get(source_url, params=payload)
+        response = self._request(source_url, params=payload)
         if response.status_code == 200:
-            rate = self._get_decoded_rate(
-                response, dest_cur, use_decimal=use_decimal, date_str=date_str)
-            if not rate:
-                raise RatesNotAvailableError("Currency {0} => {1} rate not available for Date {2}.".format(
-                    source_url, dest_cur, date_str))
-            try:
-                converted_amount = rate * amount
-                return converted_amount
-            except TypeError:
-                raise DecimalFloatMismatchError(
-                    "convert requires amount parameter is of type Decimal when force_decimal=True")
+            rates = self._decode_rates(response,date_str=date_str, base_cur=base_cur)
+            return rates
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
+    
+class CurrencyRates(CurrencyRatesBase):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.providers = [
+            CurrencyRatesForexAPI(*args, **kwargs),
+            CurrencyRatesExchangeRateHost(*args, **kwargs)
+        ]
 
+    def get_rate(self, base_cur, dest_cur, date_obj=None, use_decimal=False):
+        for provider in self.providers:
+            try:
+                return provider.get_rate(base_cur, dest_cur, date_obj=date_obj, use_decimal=use_decimal)
+            except RatesNotAvailableError:
+                continue
+        raise RatesNotAvailableError("Rates Not Available For Any Provider")
 
+    def get_rates(self, base_cur, date_obj=None):
+        for provider in self.providers:
+            try:
+                return provider.get_rates(base_cur, date_obj=date_obj)
+            except RatesNotAvailableError:
+                continue
+        raise RatesNotAvailableError("Rates Not Available For Any Provider")
+    
 _CURRENCY_FORMATTER = CurrencyRates()
 
 get_rates = _CURRENCY_FORMATTER.get_rates
