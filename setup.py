@@ -32,6 +32,7 @@ setup(
     install_requires=[
         'requests',
         'simplejson',
+        'pathlib'
     ],
     classifiers=[
         'Intended Audience :: Developers',

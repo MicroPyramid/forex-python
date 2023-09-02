@@ -1,9 +1,13 @@
 import datetime
+import json
 from decimal import Decimal
+from pathlib import Path
 from unittest import TestCase
+
 from forex_python.converter import (get_rates, get_rate, convert, get_symbol,
                                     get_currency_name, RatesNotAvailableError,
-                                    CurrencyRates, DecimalFloatMismatchError)
+                                    CurrencyRates, DecimalFloatMismatchError,
+                                    CurrencyCodes)
 
 
 class TestGetRates(TestCase):
@@ -54,7 +58,7 @@ class TestGetRate(TestCase):
 
         # check if return value is float
         self.assertTrue(isinstance(rate, float))
-    
+
     def test_get_rate_with_valid_codes_same_currency(self):
         rate = get_rate('USD', 'USD')
         # rate should be 1.
@@ -91,7 +95,6 @@ class TestAmountConvert(TestCase):
     def test_amount_convert_valid_currency_same_currency(self):
         amount = convert('USD', 'USD', 10)
         self.assertEqual(amount, float(10))
-
 
     def test_amount_convert_date(self):
         date_obj = datetime.datetime.strptime('2010-05-10', "%Y-%m-%d").date()
@@ -162,7 +165,6 @@ class TestForceDecimalAmountConvert(TestCase):
         # check if return value is Decimal
         self.assertEqual(rate, Decimal(1))
 
-
     def test_decimal_get_rate_with_date(self):
         date_obj = datetime.datetime.strptime('2010-05-10', "%Y-%m-%d").date()
         rate = self.c.get_rate('USD', 'INR', date_obj)
@@ -196,3 +198,20 @@ class TestCurrencyName(TestCase):
 
     def test_with_invalid_currency_code(self):
         self.assertFalse(get_currency_name('XYZ'))
+
+
+class TestCurrencyData(TestCase):
+    def setUp(self):
+        currency_codes_path = Path(__file__).parent.parent / 'forex_python/raw_data/currencies.json'
+        self.expected_codes = json.loads(currency_codes_path.read_text())
+        self.actual_codes = CurrencyCodes()
+
+    def test_for_loop_over_currency_data(self):
+        for (actual_currency_code, expected_currency_code) in zip(self.actual_codes, self.expected_codes):
+            assert expected_currency_code == actual_currency_code, f'{expected_currency_code} != {actual_currency_code}'
+
+    def test_nexting_currency_data(self):
+        for expected_currency_code in self.expected_codes:
+            actual_currency_code = next(self.actual_codes)
+            assert expected_currency_code == actual_currency_code, f'{expected_currency_code} != {actual_currency_code}'
+        self.assertRaises(StopIteration, next, self.actual_codes)
