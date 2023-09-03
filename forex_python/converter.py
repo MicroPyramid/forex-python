@@ -124,7 +124,7 @@ class CurrencyCodes:
     def _currency_data(self):
         if self.__currency_data is None:
             file_path = os.path.dirname(os.path.abspath(__file__))
-            with open(file_path + '/raw_data/currencies.json') as f:
+            with open(file_path + '/raw_data/currencies.json', encoding="utf-8") as f:
                 self.__currency_data = json.loads(f.read())
         return self.__currency_data
 
