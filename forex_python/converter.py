@@ -7,7 +7,7 @@ import simplejson as json
 
 class RatesNotAvailableError(Exception):
     """
-    Custom exception when https://theforexapi.com is down and not available for currency rates
+    Custom exception when https://theratesapi.com is down and not available for currency rates
     """
     pass
 
@@ -25,7 +25,7 @@ class Common:
         self._force_decimal = force_decimal
 
     def _source_url(self):
-        return "https://theforexapi.com/api/"
+        return "https://theratesapi.com/api/"
 
     def _get_date_string(self, date_obj):
         if date_obj is None:
