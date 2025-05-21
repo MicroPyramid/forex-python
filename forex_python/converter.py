@@ -2,6 +2,7 @@ import os
 from decimal import Decimal
 
 import requests
+from requests.exceptions import ReadTimeout, ConnectTimeout
 import simplejson as json
 
 
@@ -55,7 +56,10 @@ class CurrencyRates(Common):
         date_str = self._get_date_string(date_obj)
         payload = {'base': base_cur, 'rtype': 'fpy'}
         source_url = self._source_url() + date_str
-        response = requests.get(source_url, params=payload)
+        try:
+            response = requests.get(source_url, params=payload, timeout=5)
+        except (ReadTimeout, ConnectTimeout):
+            raise RatesNotAvailableError("Currency Rates Source Not Ready")
         if response.status_code == 200:
             rates = self._decode_rates(response, date_str=date_str)
             return rates
@@ -69,7 +73,10 @@ class CurrencyRates(Common):
         date_str = self._get_date_string(date_obj)
         payload = {'base': base_cur, 'symbols': dest_cur, 'rtype': 'fpy'}
         source_url = self._source_url() + date_str
-        response = requests.get(source_url, params=payload)
+        try:
+            response = requests.get(source_url, params=payload, timeout=5)
+        except (ReadTimeout, ConnectTimeout):
+            raise RatesNotAvailableError("Currency Rates Source Not Ready")
         if response.status_code == 200:
             rate = self._get_decoded_rate(response, dest_cur, date_str=date_str)
             if not rate:
@@ -92,7 +99,10 @@ class CurrencyRates(Common):
         date_str = self._get_date_string(date_obj)
         payload = {'base': base_cur, 'symbols': dest_cur, 'rtype': 'fpy'}
         source_url = self._source_url() + date_str
-        response = requests.get(source_url, params=payload)
+        try:
+            response = requests.get(source_url, params=payload, timeout=5)
+        except (ReadTimeout, ConnectTimeout):
+            raise RatesNotAvailableError("Currency Rates Source Not Ready")
         if response.status_code == 200:
             rate = self._get_decoded_rate(
                 response, dest_cur, use_decimal=use_decimal, date_str=date_str)
