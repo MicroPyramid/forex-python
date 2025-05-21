@@ -25,7 +25,7 @@ class Common:
         self._force_decimal = force_decimal
 
     def _source_url(self):
-        return "https://theforexapi.com/api/"
+        return "https://api.exchangerate.host/"
 
     def _get_date_string(self, date_obj):
         if date_obj is None:
@@ -33,13 +33,15 @@ class Common:
         date_str = date_obj.strftime('%Y-%m-%d')
         return date_str
 
-    def _decode_rates(self, response, use_decimal=False, date_str=None):
+    def _decode_rates(self, response, use_decimal=False, date_str=None, base_cur=None):
         if self._force_decimal or use_decimal:
             decoded_data = json.loads(response.text, use_decimal=True)
         else:
             decoded_data = response.json()
         # if (date_str and date_str != 'latest' and date_str != decoded_data.get('date')):
         #     raise RatesNotAvailableError("Currency Rates Source Not Ready")
+        if base_cur != None and base_cur != decoded_data['base']:
+            raise RatesNotAvailableError("Currency Rates Source Not Ready")
         return decoded_data.get('rates', {})
 
     def _get_decoded_rate(
@@ -57,7 +59,7 @@ class CurrencyRates(Common):
         source_url = self._source_url() + date_str
         response = requests.get(source_url, params=payload)
         if response.status_code == 200:
-            rates = self._decode_rates(response, date_str=date_str)
+            rates = self._decode_rates(response,date_str=date_str, base_cur=base_cur)
             return rates
         raise RatesNotAvailableError("Currency Rates Source Not Ready")
 
