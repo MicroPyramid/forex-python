@@ -99,6 +99,9 @@ class CurrencyRates(Common):
             if not rate:
                 raise RatesNotAvailableError("Currency {0} => {1} rate not available for Date {2}.".format(
                     source_url, dest_cur, date_str))
+            # Ensure rate is numeric
+            if isinstance(rate, str):
+                rate = Decimal(rate) if use_decimal else float(rate)
             try:
                 converted_amount = rate * amount
                 return converted_amount

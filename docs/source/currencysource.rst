@@ -1,9 +1,9 @@
 currency source
 ===============
 
-https://theforexapi.com
+https://theratesapi.com
 --------
-https://theforexapi.com is a free API for current and historical foreign exchange rates published by European Central Bank. The rates are updated daily 3PM CET.
+https://theratesapi.com is a free API for current and historical foreign exchange rates published by European Central Bank. The rates are updated daily 3PM CET.
 
 List of Supported Currency codes.
 ---------------------------------
