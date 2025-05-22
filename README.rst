@@ -40,7 +40,7 @@ Features of Forex Python:
 Currency Source:
 -----------------
 
-https://theforexapi.com is a free API for current and historical foreign exchange rates published by European Central Bank.
+https://theratesapi.com is a free API for current and historical foreign exchange rates published by European Central Bank.
 The rates are updated daily 3PM CET.
 
 BitCoin Price Source:
