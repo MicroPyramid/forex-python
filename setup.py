@@ -3,7 +3,7 @@ import os
 from setuptools import setup, find_packages
 
 # 1) Bump this version each release:
-VERSION = '1.9'
+VERSION = '1.9.2'
 
 # 2) Pull your README.md in as long_description:
 here = os.path.abspath(os.path.dirname(__file__))
